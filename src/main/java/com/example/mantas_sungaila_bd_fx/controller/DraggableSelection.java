@@ -22,8 +22,12 @@ public class DraggableSelection {
                 mouseAnchorX = mouseEvent.getX();
                 mouseAnchorY = mouseEvent.getY();
                 model.getSelectedId().set(Integer.parseInt(node.getId()));
+                //System.out.println("Selected primary node id:");
+                //System.out.println(model.getSelectedId().get());
             } else {
                 model.getSecondarySelectedId().set(Integer.parseInt(node.getId()));
+                //System.out.println("Selected secondary node id:");
+                //System.out.println(model.getSelectedId().get());
             }
         });
 

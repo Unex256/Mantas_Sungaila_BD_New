@@ -12,7 +12,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.ToggleButton;
@@ -55,7 +54,7 @@ public class Main implements Initializable {
 
     private final Set<String> connectionSet = new HashSet<>();
 
-    DraggableSelection draggableMaker = new DraggableSelection(model);
+    private final DraggableSelection draggableMaker = new DraggableSelection(model);
     private boolean notAdjusted = true;
 
     public void onNewObjectBtnPressed() {
@@ -101,8 +100,6 @@ public class Main implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        this.model = new MainModel();
         selectedIdLabel.textProperty().bind(model.getSelectedId().asString());
         secondarySelectedIdLabel.textProperty().bind(model.getSecondarySelectedId().asString());
 
@@ -113,6 +110,8 @@ public class Main implements Initializable {
     }
 
     public void editSelectedNode() throws IOException {
+        //System.out.println("Edit selected node is pressed, node id:");
+        //System.out.println(model.getSelectedId().get());
         switch (model.returnSelectedListItem(model.getSelectedId().get())[0]) {
             case 1 -> {
                 FXMLLoader fxmlLoader = new FXMLLoader(ApplicationLauncher.class.getResource("/com/example/mantas_sungaila_bd_fx/object-options.fxml"));

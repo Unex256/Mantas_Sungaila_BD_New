@@ -6,11 +6,8 @@ import com.example.mantas_sungaila_bd_fx.model.MainModel;
 import com.example.mantas_sungaila_bd_fx.model.Object;
 import com.example.mantas_sungaila_bd_fx.view.ApplicationLauncher;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -20,35 +17,26 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
 
 public class Main implements Initializable {
 
-    private MainModel model = new MainModel();
-
     public AnchorPane mainPane;
 
     public Button newObjectBtn;
 
     public  Label selectedIdLabel;
-    public static Label staticSelectedIdLabel;
 
     public int idIntType1 = 1;
     public int idIntType2 = 2;
-    public static int selectedId = 0;
-    public static int secondarySelectedId = 0;
-    public static int staticArrayItemId;
     public Slider speedSlider;
 
     private int simulationSpeed = 1;
@@ -56,109 +44,76 @@ public class Main implements Initializable {
     public Label stepCountLabel;
 
     private int stepCount = 0;
-    public static Label staticStepCountLabel;
 
     private int shapeId = 0;
 
 
-    public static ArrayList<Object> objectList = new ArrayList<Object>();
+    private final Set<String> connectionSet = new HashSet<>();
 
-    public static ArrayList<Influence> influenceList = new ArrayList<Influence>();
-
-    public static ArrayList<Connection> connectionList = new ArrayList<Connection>();
-
-    private Set<String> connectionSet = new HashSet<>();
-
-    public static ArrayList<Shape> shapeList = new ArrayList<Shape>();
-
-    public static ArrayList<Line> lineList = new ArrayList<Line>();
-
-    public static int staticLineId = 0;
     public Label secondarySelectedIdLabel;
 
-    public static Label staticSecondarySelectedIdLabel;
     DraggableSelection draggableMaker = new DraggableSelection();
     private boolean notAdjusted = true;
 
-    public void onNewObjectBtnPressed(ActionEvent actionEvent) throws IOException {
+    public void onNewObjectBtnPressed() {
         createNewObject();
         newObject();
     }
 
     private void createNewObject() {
-        this.objectList.add(new Object(idIntType1, shapeId));
+        MainModel.objectList.add(new Object(idIntType1, shapeId));
     }
 
-    public void onNewInfluenceBtnPressed(ActionEvent actionEvent) throws IOException {
+    public void onNewInfluenceBtnPressed() {
         createNewInfluence();
         newInfluence();
     }
 
     private void createNewInfluence() {
-        this.influenceList.add(new Influence(idIntType2, shapeId));
+        MainModel.influenceList.add(new Influence(idIntType2, shapeId));
     }
 
     public void newObject() {
-        Main.shapeList.add(new Rectangle(50, 50));
+        MainModel.shapeList.add(new Rectangle(50, 50));
 
-        Main.shapeList.get(shapeId).setStroke(Color.BLACK);
-        Main.shapeList.get(shapeId).setFill(Color.CYAN);
-        Main.shapeList.get(shapeId).setId(Integer.toString(idIntType1));
-        draggableMaker.makeDraggable(Main.shapeList.get(shapeId));
-        mainPane.getChildren().add(Main.shapeList.get(shapeId));
+        MainModel.shapeList.get(shapeId).setStroke(Color.BLACK);
+        MainModel.shapeList.get(shapeId).setFill(Color.CYAN);
+        MainModel.shapeList.get(shapeId).setId(Integer.toString(idIntType1));
+        draggableMaker.makeDraggable(MainModel.shapeList.get(shapeId));
+        mainPane.getChildren().add(MainModel.shapeList.get(shapeId));
         this.shapeId++;
         this.idIntType1++;
         this.idIntType1++;
     }
     public void newInfluence() {
-        Main.shapeList.add(new Rectangle(50, 50));
+        MainModel.shapeList.add(new Rectangle(50, 50));
 
-        Main.shapeList.get(shapeId).setStroke(Color.BLACK);
-        Main.shapeList.get(shapeId).setFill(Color.SANDYBROWN);
-        Main.shapeList.get(shapeId).setId(Integer.toString(idIntType2));
-        draggableMaker.makeDraggable(Main.shapeList.get(shapeId));
-        mainPane.getChildren().add(Main.shapeList.get(shapeId));
+        MainModel.shapeList.get(shapeId).setStroke(Color.BLACK);
+        MainModel.shapeList.get(shapeId).setFill(Color.SANDYBROWN);
+        MainModel.shapeList.get(shapeId).setId(Integer.toString(idIntType2));
+        draggableMaker.makeDraggable(MainModel.shapeList.get(shapeId));
+        mainPane.getChildren().add(MainModel.shapeList.get(shapeId));
         this.shapeId++;
         this.idIntType2++;
         this.idIntType2++;
     }
 
-    public static void setSelectedId(int id) {
-        Main.selectedId = id;
-        //System.out.println(this.selectedIdLabel.getText());
-    }
-
-    public static int getSecondarySelectedId() {
-        return secondarySelectedId;
-    }
-
-    public static void setSecondarySelectedId(int secondarySelectedId) {
-        Main.secondarySelectedId = secondarySelectedId;
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        staticSelectedIdLabel = selectedIdLabel;
-        staticSecondarySelectedIdLabel = secondarySelectedIdLabel;
-        staticStepCountLabel = stepCountLabel;
+        MainModel.setStaticSelectedIdLabel(selectedIdLabel);
+        MainModel.staticSecondarySelectedIdLabel = secondarySelectedIdLabel;
+        MainModel.staticStepCountLabel = stepCountLabel;
 
-        speedSlider.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
+        speedSlider.valueProperty().addListener((observableValue, number, t1) -> {
 
-                simulationSpeed = (int)speedSlider.getValue();
-                System.out.println(simulationSpeed);
-            }
+            simulationSpeed = (int)speedSlider.getValue();
+            System.out.println(simulationSpeed);
         });
     }
 
-    public static int getStaticArrayItemId() {
-        return staticArrayItemId;
-    }
-
-    public void editSelectedNode(ActionEvent event) throws IOException {
-        switch (returnSelectedListItem(selectedId)[0]) {
+    public void editSelectedNode() throws IOException {
+        switch (MainModel.returnSelectedListItem(MainModel.selectedId)[0]) {
             case 1 -> {
                 FXMLLoader fxmlLoader = new FXMLLoader(ApplicationLauncher.class.getResource("/com/example/mantas_sungaila_bd_fx/object-options.fxml"));
                 Scene scene = new Scene(fxmlLoader.load());
@@ -182,52 +137,30 @@ public class Main implements Initializable {
     }
 
 
-    public static int[] returnSelectedListItem(int selectedId){
-
-        if (selectedId % 2 == 1) {
-            Main.staticArrayItemId = 0;
-            for (Object object : objectList) {
-                if(object.getId() == selectedId){
-                    return new int[]{1, staticArrayItemId};
-                }
-               Main.staticArrayItemId++;
-            }
-        }else {
-            Main.staticArrayItemId = 0;
-            for (Influence influence : influenceList) {
-                if(influence.getId() == selectedId){
-                    return new int[]{2, staticArrayItemId};
-                }
-                Main.staticArrayItemId++;
-            }
-        }
-            return new int[] {0,0};
-    }
-    public void makeConnection(ActionEvent event) {
-        if(selectedId != 0 && secondarySelectedId != 0 && secondarySelectedId != selectedId){
-            String connectionKey = selectedId + ":" + secondarySelectedId;
+    public void makeConnection() {
+        if(MainModel.selectedId != 0 && MainModel.secondarySelectedId != 0 && MainModel.secondarySelectedId != MainModel.selectedId){
+            String connectionKey = MainModel.selectedId + ":" + MainModel.secondarySelectedId;
 
             if (!connectionSet.contains(connectionKey)) {
-                connectionList.add(new Connection(selectedId, secondarySelectedId, staticLineId));
-                addConnectionToObject(selectedId, secondarySelectedId);
+                MainModel.connectionList.add(new Connection(MainModel.selectedId, MainModel.secondarySelectedId, MainModel.staticLineId));
+                addConnectionToObject(MainModel.selectedId, MainModel.secondarySelectedId);
 
                 // Add the connection key to the set
                 connectionSet.add(connectionKey);
-            } else {
-                // messageText.setText("Connection already exists");
-            }
+            }  // messageText.setText("Connection already exists");
+
         }
     }
 
     private void addConnectionToObject(int selectedId, int secondarySelectedId) {
         if (selectedId % 2 == 1) {
-            for (Object object : objectList) {
+            for (Object object : MainModel.objectList) {
                 if(object.getId() == selectedId){
                     object.addConnection(secondarySelectedId);
                 }
             }
         }else {
-            for (Influence influence : influenceList) {
+            for (Influence influence : MainModel.influenceList) {
                 if(influence.getId() == selectedId){
                     influence.addConnection(secondarySelectedId);
                 }
@@ -235,69 +168,65 @@ public class Main implements Initializable {
         }
     }
 
-    public void startStopSimulation(ActionEvent event) throws InterruptedException {
+    public void startStopSimulation() {
         if(notAdjusted) {
-            for (Influence influence : influenceList) {
+            for (Influence influence : MainModel.influenceList) {
                 for (Integer integer : influence.getConnections()) {
-                    System.out.println(Main.objectList.get(integer / 2).getExitChance() + " " + influence.getExitValueChange() + " " + integer / 2);
-                    Main.objectList.get(integer / 2).adjustExitChance(influence.getExitValueChange());
-                    System.out.println(Main.objectList.get(integer / 2).getAdjustedExitChance());
-                    System.out.println(Main.objectList.get(integer / 2).getRiskChance());
-                    Main.objectList.get(integer / 2).adjustRiskChance(influence.getRiskValueChange());
-                    System.out.println(Main.objectList.get(integer / 2).getAdjustedRiskChance());
+                    System.out.println(MainModel.objectList.get(integer / 2).getExitChance() + " " + influence.getExitValueChange() + " " + integer / 2);
+                    MainModel.objectList.get(integer / 2).adjustExitChance(influence.getExitValueChange());
+                    System.out.println(MainModel.objectList.get(integer / 2).getAdjustedExitChance());
+                    System.out.println(MainModel.objectList.get(integer / 2).getRiskChance());
+                    MainModel.objectList.get(integer / 2).adjustRiskChance(influence.getRiskValueChange());
+                    System.out.println(MainModel.objectList.get(integer / 2).getAdjustedRiskChance());
                 }
             }
             this.notAdjusted = false;
         } else{
-            for (Influence influence : influenceList) {
+            for (Influence influence : MainModel.influenceList) {
                 for (Integer integer : influence.getConnections()) {
-                    System.out.println(Main.objectList.get(integer / 2).getExitChance() + " " + influence.getExitValueChange());
-                    Main.objectList.get(integer / 2).adjustExitChance(-influence.getExitValueChange());
-                    System.out.println(Main.objectList.get(integer / 2).getAdjustedExitChance());
-                    System.out.println(Main.objectList.get(integer / 2).getRiskChance() + " " + influence.getRiskValueChange());
-                    Main.objectList.get(integer / 2).adjustRiskChance(-influence.getRiskValueChange());
-                    System.out.println(Main.objectList.get(integer / 2).getAdjustedRiskChance());
+                    System.out.println(MainModel.objectList.get(integer / 2).getExitChance() + " " + influence.getExitValueChange());
+                    MainModel.objectList.get(integer / 2).adjustExitChance(-influence.getExitValueChange());
+                    System.out.println(MainModel.objectList.get(integer / 2).getAdjustedExitChance());
+                    System.out.println(MainModel.objectList.get(integer / 2).getRiskChance() + " " + influence.getRiskValueChange());
+                    MainModel.objectList.get(integer / 2).adjustRiskChance(-influence.getRiskValueChange());
+                    System.out.println(MainModel.objectList.get(integer / 2).getAdjustedRiskChance());
                 }
             }
             this.notAdjusted = true;
         }
-        Service<Void> toggleService = new Service<Void>() {
+        Service<Void> toggleService = new Service<>() {
 
             @Override
             protected Task<Void> createTask() {
 
-                return new Task<Void>(){
+                return new Task<>() {
 
                     @Override
                     protected Void call() throws Exception {
 
-                        while(!isCancelled()) {
+                        while (!isCancelled()) {
                             System.out.println(stepCount);
-                            Platform.runLater(new Runnable() {
-                                @Override public void run() {
-                                    updateStepCount();
-                                }
-                            });
-                            for (Object object : objectList) {
-                                if(object.isBeginningNode()) {
+                            Platform.runLater(Main.this::updateStepCount);
+                            for (Object object : MainModel.objectList) {
+                                if (object.isBeginningNode()) {
                                     objectTree(object);
                                 }
                             }
 
-                            Thread.sleep(1000/simulationSpeed);
+                            Thread.sleep(1000 / simulationSpeed);
                             stepCount++;
                         }
                         return null;
                     }
 
                     private void objectTree(Object object) {
-                        if(Math.random() < object.getAdjustedRiskChance()){
+                        if (Math.random() < object.getAdjustedRiskChance()) {
                             object.increaseRiskCount();
                             System.out.println(Math.random() + " " + object.getRiskCount());
                         }
-                        if(Math.random() < object.getAdjustedExitChance()){
-                            for(Integer integer : object.getConnections()){
-                                objectTree(Main.objectList.get(integer / 2));
+                        if (Math.random() < object.getAdjustedExitChance()) {
+                            for (Integer integer : object.getConnections()) {
+                                objectTree(MainModel.objectList.get(integer / 2));
 
                             }
                         }
@@ -318,7 +247,7 @@ public class Main implements Initializable {
     }
 
     private void updateStepCount() {
-        Main.staticStepCountLabel.setText(Integer.toString(stepCount));
+        MainModel.staticStepCountLabel.setText(Integer.toString(stepCount));
     }
 
 }

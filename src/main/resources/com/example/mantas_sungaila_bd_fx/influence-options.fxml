@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="223.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mantas_sungaila_bd_fx.controller.InfluenceOptions">
+   <children>
+      <TextArea fx:id="objDescriptionTextArea" layoutX="98.0" layoutY="116.0" prefHeight="63.0" prefWidth="487.0" />
+      <Label layoutX="19.0" layoutY="139.0" text="Description" />
+      <TextField fx:id="exitValueChange" layoutX="519.0" layoutY="25.0" prefHeight="26.0" prefWidth="50.0" />
+      <TextField fx:id="riskValueChange" layoutX="519.0" layoutY="62.0" prefHeight="26.0" prefWidth="50.0" />
+      <Label layoutX="456.0" layoutY="5.0" text="Chance increase/decrease" />
+      <Label layoutX="392.0" layoutY="30.0" text="Exit influence" />
+      <Label layoutX="392.0" layoutY="67.0" text="Risk/Error influence" />
+      <Label layoutX="33.0" layoutY="67.0" text="Name" />
+      <TextField fx:id="objNameTextArea" layoutX="97.0" layoutY="62.0" prefHeight="26.0" prefWidth="253.0" />
+      <Label fx:id="idLabel" layoutX="98.0" layoutY="21.0" text="0" />
+      <Label layoutX="44.0" layoutY="21.0" text="Id" />
+      <Label layoutX="211.0" layoutY="21.0" text="Type" />
+      <Label layoutX="264.0" layoutY="21.0" text="Outside influence" />
+      <Button fx:id="confirmBtn" layoutX="483.0" layoutY="184.0" mnemonicParsing="false" onAction="#onConfirmBtnPress" text="Confirm" />
+   </children>
+</AnchorPane>

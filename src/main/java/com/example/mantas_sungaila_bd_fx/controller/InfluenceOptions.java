@@ -20,17 +20,17 @@ public class InfluenceOptions implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        this.idLabel.setText(Integer.toString(MainModel.selectedId));
-        this.objDescriptionTextArea.setText(MainModel.influenceList.get(MainModel.staticArrayItemId).getDescription());
-        this.exitValueChange.setText(Float.toString(MainModel.influenceList.get(MainModel.staticArrayItemId).getExitValueChange()));
-        this.riskValueChange.setText(Float.toString(MainModel.influenceList.get(MainModel.staticArrayItemId).getRiskValueChange()));
-        this.objNameTextArea.setText(MainModel.influenceList.get(MainModel.staticArrayItemId).getObjName());
+        this.idLabel.setText(Integer.toString(MainModel.getSelectedId()));
+        this.objDescriptionTextArea.setText(MainModel.getInfluenceList().get(MainModel.getStaticArrayItemId()).getDescription());
+        this.exitValueChange.setText(Float.toString(MainModel.getInfluenceList().get(MainModel.getStaticArrayItemId()).getExitValueChange()));
+        this.riskValueChange.setText(Float.toString(MainModel.getInfluenceList().get(MainModel.getStaticArrayItemId()).getRiskValueChange()));
+        this.objNameTextArea.setText(MainModel.getInfluenceList().get(MainModel.getStaticArrayItemId()).getObjName());
     }
 
     public void onConfirmBtnPress() {
-        MainModel.influenceList.get(MainModel.staticArrayItemId).setDescription(objDescriptionTextArea.getText());
-        MainModel.influenceList.get(MainModel.staticArrayItemId).setExitValueChange(Float.parseFloat(exitValueChange.getText()));
-        MainModel.influenceList.get(MainModel.staticArrayItemId).setObjName(objNameTextArea.getText());
-        MainModel.influenceList.get(MainModel.staticArrayItemId).setRiskValueChange(Float.parseFloat(riskValueChange.getText()));
+        MainModel.getInfluenceList().get(MainModel.getStaticArrayItemId()).setDescription(objDescriptionTextArea.getText());
+        MainModel.getInfluenceList().get(MainModel.getStaticArrayItemId()).setExitValueChange(Float.parseFloat(exitValueChange.getText()));
+        MainModel.getInfluenceList().get(MainModel.getStaticArrayItemId()).setObjName(objNameTextArea.getText());
+        MainModel.getInfluenceList().get(MainModel.getStaticArrayItemId()).setRiskValueChange(Float.parseFloat(riskValueChange.getText()));
     }
 }

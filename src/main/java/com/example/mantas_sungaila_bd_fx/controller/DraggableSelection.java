@@ -22,7 +22,7 @@ public class DraggableSelection {
                 //new LineDrawer(node);
             } else {
                 MainModel.setSecondarySelectedId(Integer.parseInt(node.getId()));
-                MainModel.staticSecondarySelectedIdLabel.setText(node.getId());
+                MainModel.getStaticSecondarySelectedIdLabel().setText(node.getId());
                 //MainPage.staticSelectedIdLabel.setText(node.getId());
             }
         });
@@ -39,13 +39,13 @@ public class DraggableSelection {
     }
 
     public void lineUpdate(Node node){
-        for(Connection connection : MainModel.connectionList){
-            if(connection.getConnectedElementIds()[0] == MainModel.selectedId){
-                MainModel.lineList.get(connection.getLineId()).setStartX(new Center(node).centerXProperty().doubleValue());
-                MainModel.lineList.get(connection.getLineId()).setStartY(new Center(node).centerYProperty().doubleValue());
-            } else if (connection.getConnectedElementIds()[1] == MainModel.selectedId){
-                MainModel.lineList.get(connection.getLineId()).setEndX(new Center(node).centerXProperty().doubleValue());
-                MainModel.lineList.get(connection.getLineId()).setEndY(new Center(node).centerYProperty().doubleValue());
+        for(Connection connection : MainModel.getConnectionList()){
+            if(connection.getConnectedElementIds()[0] == MainModel.getSelectedId()){
+                MainModel.getLineList().get(connection.getLineId()).setStartX(new Center(node).centerXProperty().doubleValue());
+                MainModel.getLineList().get(connection.getLineId()).setStartY(new Center(node).centerYProperty().doubleValue());
+            } else if (connection.getConnectedElementIds()[1] == MainModel.getSelectedId()){
+                MainModel.getLineList().get(connection.getLineId()).setEndX(new Center(node).centerXProperty().doubleValue());
+                MainModel.getLineList().get(connection.getLineId()).setEndY(new Center(node).centerYProperty().doubleValue());
             }
 
         }

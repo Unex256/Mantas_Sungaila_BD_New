@@ -23,26 +23,26 @@ public class ObjectOptions implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println(MainModel.getStaticArrayItemId());
-        this.idLabel.setText(Integer.toString(MainModel.selectedId));
-        this.objDescriptionTextArea.setText(MainModel.objectList.get(MainModel.staticArrayItemId).getDescription());
-        this.exitChance.setText(Float.toString(MainModel.objectList.get(MainModel.staticArrayItemId).getExitChance()));
-        this.riskChance.setText(Float.toString(MainModel.objectList.get(MainModel.staticArrayItemId).getRiskChance()));
-        this.exitCountLabel.setText(Integer.toString(MainModel.objectList.get(MainModel.staticArrayItemId).getExitCount()));
-        this.riskCountLabel.setText(Integer.toString(MainModel.objectList.get(MainModel.staticArrayItemId).getRiskCount()));
-        this.objNameTextArea.setText(MainModel.objectList.get(MainModel.staticArrayItemId).getObjName());
-        this.beginningNodeCheckBox.setSelected(MainModel.objectList.get(MainModel.staticArrayItemId).isBeginningNode());
+        this.idLabel.setText(Integer.toString(MainModel.getSelectedId()));
+        this.objDescriptionTextArea.setText(MainModel.getObjectList().get(MainModel.getStaticArrayItemId()).getDescription());
+        this.exitChance.setText(Float.toString(MainModel.getObjectList().get(MainModel.getStaticArrayItemId()).getExitChance()));
+        this.riskChance.setText(Float.toString(MainModel.getObjectList().get(MainModel.getStaticArrayItemId()).getRiskChance()));
+        this.exitCountLabel.setText(Integer.toString(MainModel.getObjectList().get(MainModel.getStaticArrayItemId()).getExitCount()));
+        this.riskCountLabel.setText(Integer.toString(MainModel.getObjectList().get(MainModel.getStaticArrayItemId()).getRiskCount()));
+        this.objNameTextArea.setText(MainModel.getObjectList().get(MainModel.getStaticArrayItemId()).getObjName());
+        this.beginningNodeCheckBox.setSelected(MainModel.getObjectList().get(MainModel.getStaticArrayItemId()).isBeginningNode());
     }
 
     public void onConfirmBtnPress() {
-        MainModel.objectList.get(MainModel.staticArrayItemId).setDescription(objDescriptionTextArea.getText());
-        MainModel.objectList.get(MainModel.staticArrayItemId).setExitChance(Float.parseFloat(exitChance.getText()));
-        MainModel.objectList.get(MainModel.staticArrayItemId).setObjName(objNameTextArea.getText());
-        MainModel.objectList.get(MainModel.staticArrayItemId).setRiskChance(Float.parseFloat(riskChance.getText()));
-        MainModel.objectList.get(MainModel.staticArrayItemId).resetChances();
+        MainModel.getObjectList().get(MainModel.getStaticArrayItemId()).setDescription(objDescriptionTextArea.getText());
+        MainModel.getObjectList().get(MainModel.getStaticArrayItemId()).setExitChance(Float.parseFloat(exitChance.getText()));
+        MainModel.getObjectList().get(MainModel.getStaticArrayItemId()).setObjName(objNameTextArea.getText());
+        MainModel.getObjectList().get(MainModel.getStaticArrayItemId()).setRiskChance(Float.parseFloat(riskChance.getText()));
+        MainModel.getObjectList().get(MainModel.getStaticArrayItemId()).resetChances();
 
     }
 
     public void checkBoxCheck(){
-        MainModel.objectList.get(MainModel.staticArrayItemId).setBeginningNode(beginningNodeCheckBox.isSelected());
+        MainModel.getObjectList().get(MainModel.getStaticArrayItemId()).setBeginningNode(beginningNodeCheckBox.isSelected());
     }
 }

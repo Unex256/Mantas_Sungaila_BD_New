@@ -9,6 +9,8 @@ import java.util.ResourceBundle;
 
 public class ObjectOptions implements Initializable{
 
+    MainModel model;
+
     public TextArea objDescriptionTextArea;
     public TextField exitChance;
     public TextField riskChance;
@@ -20,29 +22,33 @@ public class ObjectOptions implements Initializable{
 
     public CheckBox beginningNodeCheckBox;
 
+    public ObjectOptions(MainModel model) {
+        this.model = model;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println(MainModel.getStaticArrayItemId());
-        this.idLabel.setText(Integer.toString(MainModel.getSelectedId()));
-        this.objDescriptionTextArea.setText(MainModel.getObjectList().get(MainModel.getStaticArrayItemId()).getDescription());
-        this.exitChance.setText(Float.toString(MainModel.getObjectList().get(MainModel.getStaticArrayItemId()).getExitChance()));
-        this.riskChance.setText(Float.toString(MainModel.getObjectList().get(MainModel.getStaticArrayItemId()).getRiskChance()));
-        this.exitCountLabel.setText(Integer.toString(MainModel.getObjectList().get(MainModel.getStaticArrayItemId()).getExitCount()));
-        this.riskCountLabel.setText(Integer.toString(MainModel.getObjectList().get(MainModel.getStaticArrayItemId()).getRiskCount()));
-        this.objNameTextArea.setText(MainModel.getObjectList().get(MainModel.getStaticArrayItemId()).getObjName());
-        this.beginningNodeCheckBox.setSelected(MainModel.getObjectList().get(MainModel.getStaticArrayItemId()).isBeginningNode());
+        System.out.println(model.getArrayItemId());
+        this.idLabel.setText(Integer.toString(model.getSelectedId()));
+        this.objDescriptionTextArea.setText(model.getObjectList().get(model.getArrayItemId()).getDescription());
+        this.exitChance.setText(Float.toString(model.getObjectList().get(model.getArrayItemId()).getExitChance()));
+        this.riskChance.setText(Float.toString(model.getObjectList().get(model.getArrayItemId()).getRiskChance()));
+        this.exitCountLabel.setText(Integer.toString(model.getObjectList().get(model.getArrayItemId()).getExitCount()));
+        this.riskCountLabel.setText(Integer.toString(model.getObjectList().get(model.getArrayItemId()).getRiskCount()));
+        this.objNameTextArea.setText(model.getObjectList().get(model.getArrayItemId()).getObjName());
+        this.beginningNodeCheckBox.setSelected(model.getObjectList().get(model.getArrayItemId()).isBeginningNode());
     }
 
     public void onConfirmBtnPress() {
-        MainModel.getObjectList().get(MainModel.getStaticArrayItemId()).setDescription(objDescriptionTextArea.getText());
-        MainModel.getObjectList().get(MainModel.getStaticArrayItemId()).setExitChance(Float.parseFloat(exitChance.getText()));
-        MainModel.getObjectList().get(MainModel.getStaticArrayItemId()).setObjName(objNameTextArea.getText());
-        MainModel.getObjectList().get(MainModel.getStaticArrayItemId()).setRiskChance(Float.parseFloat(riskChance.getText()));
-        MainModel.getObjectList().get(MainModel.getStaticArrayItemId()).resetChances();
+        model.getObjectList().get(model.getArrayItemId()).setDescription(objDescriptionTextArea.getText());
+        model.getObjectList().get(model.getArrayItemId()).setExitChance(Float.parseFloat(exitChance.getText()));
+        model.getObjectList().get(model.getArrayItemId()).setObjName(objNameTextArea.getText());
+        model.getObjectList().get(model.getArrayItemId()).setRiskChance(Float.parseFloat(riskChance.getText()));
+        model.getObjectList().get(model.getArrayItemId()).resetChances();
 
     }
 
     public void checkBoxCheck(){
-        MainModel.getObjectList().get(MainModel.getStaticArrayItemId()).setBeginningNode(beginningNodeCheckBox.isSelected());
+        model.getObjectList().get(model.getArrayItemId()).setBeginningNode(beginningNodeCheckBox.isSelected());
     }
 }

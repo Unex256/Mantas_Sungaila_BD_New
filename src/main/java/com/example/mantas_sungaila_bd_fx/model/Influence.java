@@ -5,16 +5,16 @@ import java.util.ArrayList;
 public class Influence {
 
     public int id;
-    private int shapeId;
+    private final int shapeId;
     public int type = 2;
 
-    public String objName = "Obj name";
+    public String objName = "Object name";
 
-    public String description = "Obj description";
+    public String description = "Object description";
 
     public float riskValueChange = 0;
 
-    public ArrayList<Integer> connections = new ArrayList<Integer>();
+    public ArrayList<Integer> connections = new ArrayList<>();
 
     public float exitValueChange = 0;
     public Influence(int id, int shapeId) {

@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 
 public class StartPage {
@@ -17,9 +18,7 @@ public class StartPage {
     public Button newProjectBtn;
     @FXML
     protected void onNewProjectButtonClick(ActionEvent event) throws IOException {
-        Parent parent = FXMLLoader.load(getClass().getResource("/com/example/mantas_sungaila_bd_fx/main-page.fxml"));
-        //FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("main-page.fxml"));
-        //Parent parent = fxmlLoader.load();
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/example/mantas_sungaila_bd_fx/main-page.fxml")));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("CyberSocial");

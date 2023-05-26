@@ -11,6 +11,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class InfluenceOptions implements Initializable {
+
+    MainModel model;
     public TextArea objDescriptionTextArea;
     public TextField exitValueChange;
     public TextField riskValueChange;
@@ -18,19 +20,27 @@ public class InfluenceOptions implements Initializable {
     public Label idLabel;
     public Button confirmBtn;
 
+    public InfluenceOptions(MainModel model) {
+        this.model = model;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        this.idLabel.setText(Integer.toString(MainModel.getSelectedId()));
-        this.objDescriptionTextArea.setText(MainModel.getInfluenceList().get(MainModel.getStaticArrayItemId()).getDescription());
-        this.exitValueChange.setText(Float.toString(MainModel.getInfluenceList().get(MainModel.getStaticArrayItemId()).getExitValueChange()));
-        this.riskValueChange.setText(Float.toString(MainModel.getInfluenceList().get(MainModel.getStaticArrayItemId()).getRiskValueChange()));
-        this.objNameTextArea.setText(MainModel.getInfluenceList().get(MainModel.getStaticArrayItemId()).getObjName());
+        this.idLabel.setText(Integer.toString(model.getSelectedId()));
+        this.objDescriptionTextArea.setText(model.getInfluenceList().get(model.getArrayItemId()).getDescription());
+        this.exitValueChange.setText(Float.toString(model.getInfluenceList().get(model.getArrayItemId()).getExitValueChange()));
+        this.riskValueChange.setText(Float.toString(model.getInfluenceList().get(model.getArrayItemId()).getRiskValueChange()));
+        this.objNameTextArea.setText(model.getInfluenceList().get(model.getArrayItemId()).getObjName());
     }
 
     public void onConfirmBtnPress() {
-        MainModel.getInfluenceList().get(MainModel.getStaticArrayItemId()).setDescription(objDescriptionTextArea.getText());
-        MainModel.getInfluenceList().get(MainModel.getStaticArrayItemId()).setExitValueChange(Float.parseFloat(exitValueChange.getText()));
-        MainModel.getInfluenceList().get(MainModel.getStaticArrayItemId()).setObjName(objNameTextArea.getText());
-        MainModel.getInfluenceList().get(MainModel.getStaticArrayItemId()).setRiskValueChange(Float.parseFloat(riskValueChange.getText()));
+        model.getInfluenceList().get(model.getArrayItemId()).setDescription(objDescriptionTextArea.getText());
+        model.getInfluenceList().get(model.getArrayItemId()).setExitValueChange(Float.parseFloat(exitValueChange.getText()));
+        model.getInfluenceList().get(model.getArrayItemId()).setObjName(objNameTextArea.getText());
+        model.getInfluenceList().get(model.getArrayItemId()).setRiskValueChange(Float.parseFloat(riskValueChange.getText()));
+    }
+
+    public void setModel(MainModel model){
+        this.model = model;
     }
 }

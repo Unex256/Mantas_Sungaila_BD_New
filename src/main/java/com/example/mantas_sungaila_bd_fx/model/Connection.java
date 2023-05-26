@@ -1,5 +1,6 @@
 package com.example.mantas_sungaila_bd_fx.model;
 
+import com.example.mantas_sungaila_bd_fx.controller.Center;
 import com.example.mantas_sungaila_bd_fx.view.LineDrawer;
 import javafx.fxml.Initializable;
 
@@ -7,37 +8,33 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Connection implements Initializable {
+    MainModel model;
     private final int[] connectedElementIds;
-    private final LineDrawer lineDrawer = new LineDrawer();
-
+    private final LineDrawer lineDrawer;
     private final int lineId;
     private Center center1;
     private Center center2;
 
-    public Connection(int a, int b, int lineId){
+    public Connection(int a, int b, int lineId, MainModel model){
+        this.model = model;
+        this.lineDrawer = new LineDrawer(model);
         this.connectedElementIds = new int[]{a , b};
         this.lineId = lineId;
-        System.out.println("check1 "+ connectedElementIds[0] + " " + connectedElementIds[1]);
-        switch (MainModel.returnSelectedListItem(connectedElementIds[0])[0]) {
-            case 1 -> {System.out.println("check 1.1 " + MainModel.getObjectList().get(
-                    MainModel.returnSelectedListItem(connectedElementIds[0])[1]).getShapeId());
-                center1 = new Center(MainModel.getShapeList().get(MainModel.getObjectList().get(
-                        MainModel.returnSelectedListItem(connectedElementIds[0])[1]).getShapeId()));
-            }
-            case 2 -> center1 = new Center(MainModel.getShapeList().get(MainModel.getInfluenceList().get(
-                    MainModel.returnSelectedListItem(connectedElementIds[0])[1]).getShapeId()));
+        switch (model.returnSelectedListItem(connectedElementIds[0])[0]) {
+            case 1 -> center1 = new Center(model.getShapeList().get(model.getObjectList().get(
+                    model.returnSelectedListItem(connectedElementIds[0])[1]).getShapeId()));
+            case 2 -> center1 = new Center(model.getShapeList().get(model.getInfluenceList().get(
+                    model.returnSelectedListItem(connectedElementIds[0])[1]).getShapeId()));
         }
-        switch (MainModel.returnSelectedListItem(connectedElementIds[1])[0]) {
+        switch (model.returnSelectedListItem(connectedElementIds[1])[0]) {
             case 1 -> {
-                System.out.println("check 1.2 " + MainModel.getObjectList().get(
-                        MainModel.returnSelectedListItem(connectedElementIds[1])[1]).getShapeId());
-                center2 = new Center(MainModel.getShapeList().get(MainModel.getObjectList().get(
-                        MainModel.returnSelectedListItem(connectedElementIds[1])[1]).getShapeId()));
+                center2 = new Center(model.getShapeList().get(model.getObjectList().get(
+                        model.returnSelectedListItem(connectedElementIds[1])[1]).getShapeId()));
                 lineDrawer.drawLine(center1, center2);
             }
             case 2 -> {
-                center2 = new Center(MainModel.getShapeList().get(MainModel.getInfluenceList().get(
-                        MainModel.returnSelectedListItem(connectedElementIds[1])[1]).getShapeId()));
+                center2 = new Center(model.getShapeList().get(model.getInfluenceList().get(
+                        model.returnSelectedListItem(connectedElementIds[1])[1]).getShapeId()));
                 lineDrawer.drawLine(center1, center2);
 
             }
@@ -57,22 +54,21 @@ public class Connection implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println("check 77");
-        switch (MainModel.returnSelectedListItem(connectedElementIds[0])[0]) {
-            case 1 -> center1 = new Center(MainModel.getShapeList().get(MainModel.getObjectList().get(
-                    MainModel.returnSelectedListItem(connectedElementIds[0])[1]).getShapeId()));
-            case 2 -> center1 = new Center(MainModel.getShapeList().get(MainModel.getInfluenceList().get(
-                    MainModel.returnSelectedListItem(connectedElementIds[0])[1]).getShapeId()));
+        switch (model.returnSelectedListItem(connectedElementIds[0])[0]) {
+            case 1 -> center1 = new Center(model.getShapeList().get(model.getObjectList().get(
+                    model.returnSelectedListItem(connectedElementIds[0])[1]).getShapeId()));
+            case 2 -> center1 = new Center(model.getShapeList().get(model.getInfluenceList().get(
+                    model.returnSelectedListItem(connectedElementIds[0])[1]).getShapeId()));
         }
-        switch (MainModel.returnSelectedListItem(connectedElementIds[1])[0]) {
+        switch (model.returnSelectedListItem(connectedElementIds[1])[0]) {
             case 1 -> {
-                center2 = new Center(MainModel.getShapeList().get(MainModel.getObjectList().get(
-                        MainModel.returnSelectedListItem(connectedElementIds[1])[1]).getShapeId()));
+                center2 = new Center(model.getShapeList().get(model.getObjectList().get(
+                        model.returnSelectedListItem(connectedElementIds[1])[1]).getShapeId()));
                 lineDrawer.drawLine(center1, center2);
             }
             case 2 -> {
-                center2 = new Center(MainModel.getShapeList().get(MainModel.getInfluenceList().get(
-                        MainModel.returnSelectedListItem(connectedElementIds[1])[1]).getShapeId()));
+                center2 = new Center(model.getShapeList().get(model.getInfluenceList().get(
+                        model.returnSelectedListItem(connectedElementIds[1])[1]).getShapeId()));
                 lineDrawer.drawLine(center1, center2);
 
             }

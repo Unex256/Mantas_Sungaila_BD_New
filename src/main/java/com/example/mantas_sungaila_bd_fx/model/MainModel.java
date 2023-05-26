@@ -7,139 +7,138 @@ import javafx.scene.shape.Shape;
 import java.util.ArrayList;
 
 public class MainModel {
-    private static Label staticSelectedIdLabel;
-    private static int selectedId = 0;
-    private static int secondarySelectedId = 0;
-    private static int staticArrayItemId;
-    private static Label staticStepCountLabel;
-    private static ArrayList<Object> objectList = new ArrayList<>();
-    private static ArrayList<Influence> influenceList = new ArrayList<>();
-    private static ArrayList<Connection> connectionList = new ArrayList<>();
-    private static ArrayList<Shape> shapeList = new ArrayList<>();
-    private static ArrayList<Line> lineList = new ArrayList<>();
-    private static int staticLineId = 0;
-    private static Label staticSecondarySelectedIdLabel;
+    private Label selectedIdLabel;
+    private int selectedId = 0;
+    private int secondarySelectedId = 0;
+    private int arrayItemId;
+    private Label stepCountLabel;
+    private ArrayList<Object> objectList = new ArrayList<>();
+    private ArrayList<Influence> influenceList = new ArrayList<>();
+    private ArrayList<Connection> connectionList = new ArrayList<>();
+    private ArrayList<Shape> shapeList = new ArrayList<>();
+    private ArrayList<Line> lineList = new ArrayList<>();
+    private int lineId = 0;
+    private Label secondarySelectedIdLabel;
 
-    public static void setSelectedId(int id) {
-        selectedId = id;
-        //System.out.println(this.selectedIdLabel.getText());
-    }
-
-    public static void setSecondarySelectedId(int secondarySelectedId) {
-        MainModel.secondarySelectedId = secondarySelectedId;
-    }
-
-    public static int getStaticArrayItemId() {
-        return staticArrayItemId;
-    }
-
-    public static int[] returnSelectedListItem(int selectedId){
+    public int[] returnSelectedListItem(int selectedId){
 
         if (selectedId % 2 == 1) {
-            staticArrayItemId = 0;
+            arrayItemId = 0;
             for (Object object : objectList) {
                 if(object.getId() == selectedId){
-                    return new int[]{1, staticArrayItemId};
+                    return new int[]{1, arrayItemId};
                 }
-               staticArrayItemId++;
+               arrayItemId++;
             }
         }else {
-            staticArrayItemId = 0;
+            arrayItemId = 0;
             for (Influence influence : influenceList) {
                 if(influence.getId() == selectedId){
-                    return new int[]{2, staticArrayItemId};
+                    return new int[]{2, arrayItemId};
                 }
-                staticArrayItemId++;
+                arrayItemId++;
             }
         }
             return new int[] {0,0};
     }
 
-    public static Label getStaticSelectedIdLabel() {
-        return staticSelectedIdLabel;
+    public Label getSelectedIdLabel() {
+        return selectedIdLabel;
     }
 
-    public static void setStaticSelectedIdLabel(Label staticSelectedIdLabel) {
-        MainModel.staticSelectedIdLabel = staticSelectedIdLabel;
+    public void setSelectedIdLabel(Label selectedIdLabel) {
+        this.selectedIdLabel = selectedIdLabel;
     }
 
-    public static int getSelectedId() {
+    public int getSelectedId() {
         return selectedId;
     }
 
-    public static int getSecondarySelectedId() {
+    public void setSelectedId(int selectedId) {
+        this.selectedId = selectedId;
+    }
+
+    public int getSecondarySelectedId() {
         return secondarySelectedId;
     }
 
-    public static void setStaticArrayItemId(int staticArrayItemId) {
-        MainModel.staticArrayItemId = staticArrayItemId;
+    public void setSecondarySelectedId(int secondarySelectedId) {
+        this.secondarySelectedId = secondarySelectedId;
     }
 
-    public static Label getStaticStepCountLabel() {
-        return staticStepCountLabel;
+    public int getArrayItemId() {
+        return arrayItemId;
     }
 
-    public static void setStaticStepCountLabel(Label staticStepCountLabel) {
-        MainModel.staticStepCountLabel = staticStepCountLabel;
+    public void setArrayItemId(int arrayItemId) {
+        this.arrayItemId = arrayItemId;
     }
 
-    public static ArrayList<Object> getObjectList() {
+    public Label getStepCountLabel() {
+        return stepCountLabel;
+    }
+
+    public void setStepCountLabel(Label stepCountLabel) {
+        this.stepCountLabel = stepCountLabel;
+    }
+
+    public ArrayList<Object> getObjectList() {
         return objectList;
     }
 
-    public static void setObjectList(ArrayList<Object> objectList) {
-        MainModel.objectList = objectList;
+    public void setObjectList(ArrayList<Object> objectList) {
+        this.objectList = objectList;
     }
 
-    public static ArrayList<Influence> getInfluenceList() {
+    public ArrayList<Influence> getInfluenceList() {
         return influenceList;
     }
 
-    public static void setInfluenceList(ArrayList<Influence> influenceList) {
-        MainModel.influenceList = influenceList;
+    public void setInfluenceList(ArrayList<Influence> influenceList) {
+        this.influenceList = influenceList;
     }
 
-    public static ArrayList<Connection> getConnectionList() {
+    public ArrayList<Connection> getConnectionList() {
         return connectionList;
     }
 
-    public static void setConnectionList(ArrayList<Connection> connectionList) {
-        MainModel.connectionList = connectionList;
+    public void setConnectionList(ArrayList<Connection> connectionList) {
+        this.connectionList = connectionList;
     }
 
-    public static ArrayList<Shape> getShapeList() {
+    public ArrayList<Shape> getShapeList() {
         return shapeList;
     }
 
-    public static void setShapeList(ArrayList<Shape> shapeList) {
-        MainModel.shapeList = shapeList;
+    public void setShapeList(ArrayList<Shape> shapeList) {
+        this.shapeList = shapeList;
     }
 
-    public static ArrayList<Line> getLineList() {
+    public ArrayList<Line> getLineList() {
         return lineList;
     }
 
-    public static void setLineList(ArrayList<Line> lineList) {
-        MainModel.lineList = lineList;
+    public void setLineList(ArrayList<Line> lineList) {
+        this.lineList = lineList;
     }
 
-    public static int getStaticLineId() {
-        return staticLineId;
+    public int getLineId() {
+        return lineId;
     }
 
-    public static void setStaticLineId(int staticLineId) {
-        MainModel.staticLineId = staticLineId;
+    public void setLineId(int lineId) {
+        this.lineId = lineId;
     }
 
-    public static Label getStaticSecondarySelectedIdLabel() {
-        return staticSecondarySelectedIdLabel;
+    public Label getSecondarySelectedIdLabel() {
+        return secondarySelectedIdLabel;
     }
 
-    public static void setStaticSecondarySelectedIdLabel(Label staticSecondarySelectedIdLabel) {
-        MainModel.staticSecondarySelectedIdLabel = staticSecondarySelectedIdLabel;
+    public void setSecondarySelectedIdLabel(Label secondarySelectedIdLabel) {
+        this.secondarySelectedIdLabel = secondarySelectedIdLabel;
     }
 
-    public static void increaseStaticLineId() {
-        staticLineId++;
+    public void increaseStaticLineId() {
+        this.lineId++;
     }
 }

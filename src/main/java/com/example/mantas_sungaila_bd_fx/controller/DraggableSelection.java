@@ -1,6 +1,5 @@
 package com.example.mantas_sungaila_bd_fx.controller;
 
-import com.example.mantas_sungaila_bd_fx.model.Center;
 import com.example.mantas_sungaila_bd_fx.model.Connection;
 import com.example.mantas_sungaila_bd_fx.model.MainModel;
 import javafx.scene.Node;
@@ -8,8 +7,13 @@ import javafx.scene.input.MouseButton;
 
 public class DraggableSelection {
 
+    MainModel model;
     private double mouseAnchorX;
     private double mouseAnchorY;
+
+    public DraggableSelection(MainModel model) {
+        this.model = model;
+    }
 
     public void makeDraggable(Node node){
 
@@ -17,13 +21,12 @@ public class DraggableSelection {
             if (mouseEvent.getButton() == MouseButton.PRIMARY) {
                 mouseAnchorX = mouseEvent.getX();
                 mouseAnchorY = mouseEvent.getY();
-                MainModel.setSelectedId(Integer.parseInt(node.getId()));
-                MainModel.getStaticSelectedIdLabel().setText(node.getId());
+                model.setSelectedId(Integer.parseInt(node.getId()));
+                //model.getSelectedIdLabel().setText(node.getId());
                 //new LineDrawer(node);
             } else {
-                MainModel.setSecondarySelectedId(Integer.parseInt(node.getId()));
-                MainModel.getStaticSecondarySelectedIdLabel().setText(node.getId());
-                //MainPage.staticSelectedIdLabel.setText(node.getId());
+                model.setSecondarySelectedId(Integer.parseInt(node.getId()));
+                //model.getSecondarySelectedIdLabel().setText(node.getId());
             }
         });
 
@@ -39,15 +42,16 @@ public class DraggableSelection {
     }
 
     public void lineUpdate(Node node){
-        for(Connection connection : MainModel.getConnectionList()){
-            if(connection.getConnectedElementIds()[0] == MainModel.getSelectedId()){
-                MainModel.getLineList().get(connection.getLineId()).setStartX(new Center(node).centerXProperty().doubleValue());
-                MainModel.getLineList().get(connection.getLineId()).setStartY(new Center(node).centerYProperty().doubleValue());
-            } else if (connection.getConnectedElementIds()[1] == MainModel.getSelectedId()){
-                MainModel.getLineList().get(connection.getLineId()).setEndX(new Center(node).centerXProperty().doubleValue());
-                MainModel.getLineList().get(connection.getLineId()).setEndY(new Center(node).centerYProperty().doubleValue());
+        for(Connection connection : model.getConnectionList()){
+            if(connection.getConnectedElementIds()[0] == model.getSelectedId()){
+                model.getLineList().get(connection.getLineId()).setStartX(new Center(node).centerXProperty().doubleValue());
+                model.getLineList().get(connection.getLineId()).setStartY(new Center(node).centerYProperty().doubleValue());
+            } else if (connection.getConnectedElementIds()[1] == model.getSelectedId()){
+                model.getLineList().get(connection.getLineId()).setEndX(new Center(node).centerXProperty().doubleValue());
+                model.getLineList().get(connection.getLineId()).setEndY(new Center(node).centerYProperty().doubleValue());
             }
 
         }
     }
+
 }

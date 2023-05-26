@@ -29,6 +29,8 @@ import java.util.Set;
 
 public class Main implements Initializable {
 
+    private MainModel model = new MainModel();
+
     public AnchorPane mainPane;
 
     public Button newObjectBtn;
@@ -52,7 +54,7 @@ public class Main implements Initializable {
 
     public Label secondarySelectedIdLabel;
 
-    DraggableSelection draggableMaker = new DraggableSelection();
+    DraggableSelection draggableMaker = new DraggableSelection(model);
     private boolean notAdjusted = true;
 
     public void onNewObjectBtnPressed() {
@@ -61,7 +63,7 @@ public class Main implements Initializable {
     }
 
     private void createNewObject() {
-        MainModel.getObjectList().add(new Object(idIntType1, shapeId));
+        model.getObjectList().add(new Object(idIntType1, shapeId));
     }
 
     public void onNewInfluenceBtnPressed() {
@@ -70,29 +72,29 @@ public class Main implements Initializable {
     }
 
     private void createNewInfluence() {
-        MainModel.getInfluenceList().add(new Influence(idIntType2, shapeId));
+        model.getInfluenceList().add(new Influence(idIntType2, shapeId));
     }
 
     public void newObject() {
-        MainModel.getShapeList().add(new Rectangle(50, 50));
+        model.getShapeList().add(new Rectangle(50, 50));
 
-        MainModel.getShapeList().get(shapeId).setStroke(Color.BLACK);
-        MainModel.getShapeList().get(shapeId).setFill(Color.CYAN);
-        MainModel.getShapeList().get(shapeId).setId(Integer.toString(idIntType1));
-        draggableMaker.makeDraggable(MainModel.getShapeList().get(shapeId));
-        mainPane.getChildren().add(MainModel.getShapeList().get(shapeId));
+        model.getShapeList().get(shapeId).setStroke(Color.BLACK);
+        model.getShapeList().get(shapeId).setFill(Color.CYAN);
+        model.getShapeList().get(shapeId).setId(Integer.toString(idIntType1));
+        draggableMaker.makeDraggable(model.getShapeList().get(shapeId));
+        mainPane.getChildren().add(model.getShapeList().get(shapeId));
         this.shapeId++;
         this.idIntType1++;
         this.idIntType1++;
     }
     public void newInfluence() {
-        MainModel.getShapeList().add(new Rectangle(50, 50));
+        model.getShapeList().add(new Rectangle(50, 50));
 
-        MainModel.getShapeList().get(shapeId).setStroke(Color.BLACK);
-        MainModel.getShapeList().get(shapeId).setFill(Color.SANDYBROWN);
-        MainModel.getShapeList().get(shapeId).setId(Integer.toString(idIntType2));
-        draggableMaker.makeDraggable(MainModel.getShapeList().get(shapeId));
-        mainPane.getChildren().add(MainModel.getShapeList().get(shapeId));
+        model.getShapeList().get(shapeId).setStroke(Color.BLACK);
+        model.getShapeList().get(shapeId).setFill(Color.SANDYBROWN);
+        model.getShapeList().get(shapeId).setId(Integer.toString(idIntType2));
+        draggableMaker.makeDraggable(model.getShapeList().get(shapeId));
+        mainPane.getChildren().add(model.getShapeList().get(shapeId));
         this.shapeId++;
         this.idIntType2++;
         this.idIntType2++;
@@ -101,9 +103,12 @@ public class Main implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        MainModel.setStaticSelectedIdLabel(selectedIdLabel);
-        MainModel.setStaticSecondarySelectedIdLabel(secondarySelectedIdLabel);
-        MainModel.setStaticStepCountLabel(stepCountLabel);
+        this.model = new MainModel();
+
+        model.setSelectedIdLabel(selectedIdLabel);
+        model.setSecondarySelectedIdLabel(secondarySelectedIdLabel);
+        model.setStepCountLabel(stepCountLabel);
+
 
         speedSlider.valueProperty().addListener((observableValue, number, t1) -> {
 
@@ -113,9 +118,10 @@ public class Main implements Initializable {
     }
 
     public void editSelectedNode() throws IOException {
-        switch (MainModel.returnSelectedListItem(MainModel.getSelectedId())[0]) {
+        switch (model.returnSelectedListItem(model.getSelectedId())[0]) {
             case 1 -> {
                 FXMLLoader fxmlLoader = new FXMLLoader(ApplicationLauncher.class.getResource("/com/example/mantas_sungaila_bd_fx/object-options.fxml"));
+                fxmlLoader.setControllerFactory(c -> new ObjectOptions(model));
                 Scene scene = new Scene(fxmlLoader.load());
                 Stage stage = new Stage();
                 stage.setTitle("Object options");
@@ -125,6 +131,7 @@ public class Main implements Initializable {
             }
             case 2 -> {
                 FXMLLoader fxmlLoader = new FXMLLoader(ApplicationLauncher.class.getResource("/com/example/mantas_sungaila_bd_fx/influence-options.fxml"));
+                fxmlLoader.setControllerFactory(c -> new InfluenceOptions(model));
                 Scene scene = new Scene(fxmlLoader.load());
                 Stage stage = new Stage();
                 stage.setTitle("Outside influence");
@@ -133,17 +140,16 @@ public class Main implements Initializable {
                 stage.show();
             }
         }
-
     }
 
 
     public void makeConnection() {
-        if(MainModel.getSelectedId() != 0 && MainModel.getSecondarySelectedId() != 0 && MainModel.getSecondarySelectedId() != MainModel.getSelectedId()){
-            String connectionKey = MainModel.getSelectedId() + ":" + MainModel.getSecondarySelectedId();
+        if(model.getSelectedId() != 0 && model.getSecondarySelectedId() != 0 && model.getSecondarySelectedId() != model.getSelectedId()){
+            String connectionKey = model.getSelectedId() + ":" + model.getSecondarySelectedId();
 
             if (!connectionSet.contains(connectionKey)) {
-                MainModel.getConnectionList().add(new Connection(MainModel.getSelectedId(), MainModel.getSecondarySelectedId(), MainModel.getStaticLineId()));
-                addConnectionToObject(MainModel.getSelectedId(), MainModel.getSecondarySelectedId());
+                model.getConnectionList().add(new Connection(model.getSelectedId(), model.getSecondarySelectedId(), model.getLineId(), model));
+                addConnectionToObject(model.getSelectedId(), model.getSecondarySelectedId());
 
                 // Add the connection key to the set
                 connectionSet.add(connectionKey);
@@ -154,13 +160,13 @@ public class Main implements Initializable {
 
     private void addConnectionToObject(int selectedId, int secondarySelectedId) {
         if (selectedId % 2 == 1) {
-            for (Object object : MainModel.getObjectList()) {
+            for (Object object : model.getObjectList()) {
                 if(object.getId() == selectedId){
                     object.addConnection(secondarySelectedId);
                 }
             }
         }else {
-            for (Influence influence : MainModel.getInfluenceList()) {
+            for (Influence influence : model.getInfluenceList()) {
                 if(influence.getId() == selectedId){
                     influence.addConnection(secondarySelectedId);
                 }
@@ -170,26 +176,26 @@ public class Main implements Initializable {
 
     public void startStopSimulation() {
         if(notAdjusted) {
-            for (Influence influence : MainModel.getInfluenceList()) {
+            for (Influence influence : model.getInfluenceList()) {
                 for (Integer integer : influence.getConnections()) {
-                    System.out.println(MainModel.getObjectList().get(integer / 2).getExitChance() + " " + influence.getExitValueChange() + " " + integer / 2);
-                    MainModel.getObjectList().get(integer / 2).adjustExitChance(influence.getExitValueChange());
-                    System.out.println(MainModel.getObjectList().get(integer / 2).getAdjustedExitChance());
-                    System.out.println(MainModel.getObjectList().get(integer / 2).getRiskChance());
-                    MainModel.getObjectList().get(integer / 2).adjustRiskChance(influence.getRiskValueChange());
-                    System.out.println(MainModel.getObjectList().get(integer / 2).getAdjustedRiskChance());
+                    System.out.println(model.getObjectList().get(integer / 2).getExitChance() + " " + influence.getExitValueChange() + " " + integer / 2);
+                    model.getObjectList().get(integer / 2).adjustExitChance(influence.getExitValueChange());
+                    System.out.println(model.getObjectList().get(integer / 2).getAdjustedExitChance());
+                    System.out.println(model.getObjectList().get(integer / 2).getRiskChance());
+                    model.getObjectList().get(integer / 2).adjustRiskChance(influence.getRiskValueChange());
+                    System.out.println(model.getObjectList().get(integer / 2).getAdjustedRiskChance());
                 }
             }
             this.notAdjusted = false;
         } else{
-            for (Influence influence : MainModel.getInfluenceList()) {
+            for (Influence influence : model.getInfluenceList()) {
                 for (Integer integer : influence.getConnections()) {
-                    System.out.println(MainModel.getObjectList().get(integer / 2).getExitChance() + " " + influence.getExitValueChange());
-                    MainModel.getObjectList().get(integer / 2).adjustExitChance(-influence.getExitValueChange());
-                    System.out.println(MainModel.getObjectList().get(integer / 2).getAdjustedExitChance());
-                    System.out.println(MainModel.getObjectList().get(integer / 2).getRiskChance() + " " + influence.getRiskValueChange());
-                    MainModel.getObjectList().get(integer / 2).adjustRiskChance(-influence.getRiskValueChange());
-                    System.out.println(MainModel.getObjectList().get(integer / 2).getAdjustedRiskChance());
+                    System.out.println(model.getObjectList().get(integer / 2).getExitChance() + " " + influence.getExitValueChange());
+                    model.getObjectList().get(integer / 2).adjustExitChance(-influence.getExitValueChange());
+                    System.out.println(model.getObjectList().get(integer / 2).getAdjustedExitChance());
+                    System.out.println(model.getObjectList().get(integer / 2).getRiskChance() + " " + influence.getRiskValueChange());
+                    model.getObjectList().get(integer / 2).adjustRiskChance(-influence.getRiskValueChange());
+                    System.out.println(model.getObjectList().get(integer / 2).getAdjustedRiskChance());
                 }
             }
             this.notAdjusted = true;
@@ -207,7 +213,7 @@ public class Main implements Initializable {
                         while (!isCancelled()) {
                             System.out.println(stepCount);
                             Platform.runLater(Main.this::updateStepCount);
-                            for (Object object : MainModel.getObjectList()) {
+                            for (Object object : model.getObjectList()) {
                                 if (object.isBeginningNode()) {
                                     objectTree(object);
                                 }
@@ -226,7 +232,7 @@ public class Main implements Initializable {
                         }
                         if (Math.random() < object.getAdjustedExitChance()) {
                             for (Integer integer : object.getConnections()) {
-                                objectTree(MainModel.getObjectList().get(integer / 2));
+                                objectTree(model.getObjectList().get(integer / 2));
 
                             }
                         }
@@ -247,7 +253,7 @@ public class Main implements Initializable {
     }
 
     private void updateStepCount() {
-        MainModel.getStaticStepCountLabel().setText(Integer.toString(stepCount));
+        model.getStepCountLabel().setText(Integer.toString(stepCount));
     }
 
 }

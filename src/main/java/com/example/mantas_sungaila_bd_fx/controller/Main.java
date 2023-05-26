@@ -8,6 +8,7 @@ import com.example.mantas_sungaila_bd_fx.view.ApplicationLauncher;
 import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -31,19 +32,21 @@ public class Main implements Initializable {
 
     private MainModel model = new MainModel();
 
-    public AnchorPane mainPane;
+    @FXML private AnchorPane mainPane;
 
-    public Button newObjectBtn;
+    @FXML private Label selectedIdLabel;
 
-    public  Label selectedIdLabel;
+    @FXML private Label secondarySelectedIdLabel;
 
+    @FXML private Slider speedSlider;
+
+    @FXML private ToggleButton startStopSimulationBtn;
+
+    @FXML private Label stepCountLabel;
     public int idIntType1 = 1;
     public int idIntType2 = 2;
-    public Slider speedSlider;
 
     private int simulationSpeed = 1;
-    public ToggleButton startStopSimulationBtn;
-    public Label stepCountLabel;
 
     private int stepCount = 0;
 
@@ -51,8 +54,6 @@ public class Main implements Initializable {
 
 
     private final Set<String> connectionSet = new HashSet<>();
-
-    public Label secondarySelectedIdLabel;
 
     DraggableSelection draggableMaker = new DraggableSelection(model);
     private boolean notAdjusted = true;
@@ -84,8 +85,7 @@ public class Main implements Initializable {
         draggableMaker.makeDraggable(model.getShapeList().get(shapeId));
         mainPane.getChildren().add(model.getShapeList().get(shapeId));
         this.shapeId++;
-        this.idIntType1++;
-        this.idIntType1++;
+        this.idIntType1+=2;
     }
     public void newInfluence() {
         model.getShapeList().add(new Rectangle(50, 50));
@@ -96,29 +96,24 @@ public class Main implements Initializable {
         draggableMaker.makeDraggable(model.getShapeList().get(shapeId));
         mainPane.getChildren().add(model.getShapeList().get(shapeId));
         this.shapeId++;
-        this.idIntType2++;
-        this.idIntType2++;
+        this.idIntType2+=2;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         this.model = new MainModel();
-
-        model.setSelectedIdLabel(selectedIdLabel);
-        model.setSecondarySelectedIdLabel(secondarySelectedIdLabel);
-        model.setStepCountLabel(stepCountLabel);
-
+        selectedIdLabel.textProperty().bind(model.getSelectedId().asString());
+        secondarySelectedIdLabel.textProperty().bind(model.getSecondarySelectedId().asString());
 
         speedSlider.valueProperty().addListener((observableValue, number, t1) -> {
-
             simulationSpeed = (int)speedSlider.getValue();
             System.out.println(simulationSpeed);
         });
     }
 
     public void editSelectedNode() throws IOException {
-        switch (model.returnSelectedListItem(model.getSelectedId())[0]) {
+        switch (model.returnSelectedListItem(model.getSelectedId().get())[0]) {
             case 1 -> {
                 FXMLLoader fxmlLoader = new FXMLLoader(ApplicationLauncher.class.getResource("/com/example/mantas_sungaila_bd_fx/object-options.fxml"));
                 fxmlLoader.setControllerFactory(c -> new ObjectOptions(model));
@@ -144,12 +139,12 @@ public class Main implements Initializable {
 
 
     public void makeConnection() {
-        if(model.getSelectedId() != 0 && model.getSecondarySelectedId() != 0 && model.getSecondarySelectedId() != model.getSelectedId()){
+        if(model.getSelectedId().get() != 0 && model.getSecondarySelectedId().get() != 0 && model.getSecondarySelectedId().get() != model.getSelectedId().get()){
             String connectionKey = model.getSelectedId() + ":" + model.getSecondarySelectedId();
 
             if (!connectionSet.contains(connectionKey)) {
-                model.getConnectionList().add(new Connection(model.getSelectedId(), model.getSecondarySelectedId(), model.getLineId(), model));
-                addConnectionToObject(model.getSelectedId(), model.getSecondarySelectedId());
+                model.getConnectionList().add(new Connection(model.getSelectedId().get(), model.getSecondarySelectedId().get(), model.getLineId(), model));
+                addConnectionToObject(model.getSelectedId().get(), model.getSecondarySelectedId().get());
 
                 // Add the connection key to the set
                 connectionSet.add(connectionKey);

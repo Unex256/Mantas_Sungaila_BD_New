@@ -1,5 +1,7 @@
 package com.example.mantas_sungaila_bd_fx.model;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.control.Label;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Shape;
@@ -7,9 +9,9 @@ import javafx.scene.shape.Shape;
 import java.util.ArrayList;
 
 public class MainModel {
-    private Label selectedIdLabel;
-    private int selectedId = 0;
-    private int secondarySelectedId = 0;
+    private final IntegerProperty selectedId = new SimpleIntegerProperty(0);
+    private final IntegerProperty secondarySelectedId = new SimpleIntegerProperty(0);
+
     private int arrayItemId;
     private Label stepCountLabel;
     private ArrayList<Object> objectList = new ArrayList<>();
@@ -18,7 +20,6 @@ public class MainModel {
     private ArrayList<Shape> shapeList = new ArrayList<>();
     private ArrayList<Line> lineList = new ArrayList<>();
     private int lineId = 0;
-    private Label secondarySelectedIdLabel;
 
     public int[] returnSelectedListItem(int selectedId){
 
@@ -42,29 +43,15 @@ public class MainModel {
             return new int[] {0,0};
     }
 
-    public Label getSelectedIdLabel() {
-        return selectedIdLabel;
-    }
 
-    public void setSelectedIdLabel(Label selectedIdLabel) {
-        this.selectedIdLabel = selectedIdLabel;
-    }
-
-    public int getSelectedId() {
+    public IntegerProperty getSelectedId() {
         return selectedId;
     }
 
-    public void setSelectedId(int selectedId) {
-        this.selectedId = selectedId;
-    }
-
-    public int getSecondarySelectedId() {
+    public IntegerProperty getSecondarySelectedId() {
         return secondarySelectedId;
     }
 
-    public void setSecondarySelectedId(int secondarySelectedId) {
-        this.secondarySelectedId = secondarySelectedId;
-    }
 
     public int getArrayItemId() {
         return arrayItemId;
@@ -128,14 +115,6 @@ public class MainModel {
 
     public void setLineId(int lineId) {
         this.lineId = lineId;
-    }
-
-    public Label getSecondarySelectedIdLabel() {
-        return secondarySelectedIdLabel;
-    }
-
-    public void setSecondarySelectedIdLabel(Label secondarySelectedIdLabel) {
-        this.secondarySelectedIdLabel = secondarySelectedIdLabel;
     }
 
     public void increaseStaticLineId() {

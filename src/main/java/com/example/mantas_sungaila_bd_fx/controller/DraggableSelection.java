@@ -21,12 +21,9 @@ public class DraggableSelection {
             if (mouseEvent.getButton() == MouseButton.PRIMARY) {
                 mouseAnchorX = mouseEvent.getX();
                 mouseAnchorY = mouseEvent.getY();
-                model.setSelectedId(Integer.parseInt(node.getId()));
-                //model.getSelectedIdLabel().setText(node.getId());
-                //new LineDrawer(node);
+                model.getSelectedId().set(Integer.parseInt(node.getId()));
             } else {
-                model.setSecondarySelectedId(Integer.parseInt(node.getId()));
-                //model.getSecondarySelectedIdLabel().setText(node.getId());
+                model.getSecondarySelectedId().set(Integer.parseInt(node.getId()));
             }
         });
 
@@ -43,10 +40,10 @@ public class DraggableSelection {
 
     public void lineUpdate(Node node){
         for(Connection connection : model.getConnectionList()){
-            if(connection.getConnectedElementIds()[0] == model.getSelectedId()){
+            if(connection.getConnectedElementIds()[0] == model.getSelectedId().get()){
                 model.getLineList().get(connection.getLineId()).setStartX(new Center(node).centerXProperty().doubleValue());
                 model.getLineList().get(connection.getLineId()).setStartY(new Center(node).centerYProperty().doubleValue());
-            } else if (connection.getConnectedElementIds()[1] == model.getSelectedId()){
+            } else if (connection.getConnectedElementIds()[1] == model.getSelectedId().get()){
                 model.getLineList().get(connection.getLineId()).setEndX(new Center(node).centerXProperty().doubleValue());
                 model.getLineList().get(connection.getLineId()).setEndY(new Center(node).centerYProperty().doubleValue());
             }

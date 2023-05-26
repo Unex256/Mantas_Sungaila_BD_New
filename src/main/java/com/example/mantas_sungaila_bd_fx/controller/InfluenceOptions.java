@@ -26,7 +26,7 @@ public class InfluenceOptions implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        this.idLabel.setText(Integer.toString(model.getSelectedId()));
+        this.idLabel.setText(Integer.toString(model.getSelectedId().get()));
         this.objDescriptionTextArea.setText(model.getInfluenceList().get(model.getArrayItemId()).getDescription());
         this.exitValueChange.setText(Float.toString(model.getInfluenceList().get(model.getArrayItemId()).getExitValueChange()));
         this.riskValueChange.setText(Float.toString(model.getInfluenceList().get(model.getArrayItemId()).getRiskValueChange()));

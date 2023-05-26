@@ -10,7 +10,6 @@ import java.util.ResourceBundle;
 public class ObjectOptions implements Initializable{
 
     MainModel model;
-
     public TextArea objDescriptionTextArea;
     public TextField exitChance;
     public TextField riskChance;
@@ -29,7 +28,7 @@ public class ObjectOptions implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println(model.getArrayItemId());
-        this.idLabel.setText(Integer.toString(model.getSelectedId()));
+        this.idLabel.setText(Integer.toString(model.getSelectedId().get()));
         this.objDescriptionTextArea.setText(model.getObjectList().get(model.getArrayItemId()).getDescription());
         this.exitChance.setText(Float.toString(model.getObjectList().get(model.getArrayItemId()).getExitChance()));
         this.riskChance.setText(Float.toString(model.getObjectList().get(model.getArrayItemId()).getRiskChance()));

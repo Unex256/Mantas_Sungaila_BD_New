@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import com.example.mantas_sungaila_bd_fx.view.DrawingCanvas?>
 
 <AnchorPane prefHeight="223.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mantas_sungaila_bd_fx.controller.InfluenceOptions">
    <children>
@@ -19,5 +20,8 @@
       <Label layoutX="211.0" layoutY="21.0" text="Type" />
       <Label layoutX="264.0" layoutY="21.0" text="Outside influence" />
       <Button fx:id="confirmBtn" layoutX="483.0" layoutY="184.0" mnemonicParsing="false" onAction="#onConfirmBtnPress" text="Confirm" />
+      <Pane fx:id="drawingPane" style="-fx-border-color: black; -fx-border-width: 2;" layoutX="610.0" layoutY="10.0">
+         <DrawingCanvas fx:id="drawingCanvas" width="180" height="180" layoutX="4.0" layoutY="4.0"/>
+      </Pane>
    </children>
 </AnchorPane>

@@ -1,10 +1,10 @@
 package com.example.mantas_sungaila_bd_fx.model;
 
+import com.example.mantas_sungaila_bd_fx.view.CustomNode;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.control.Label;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Shape;
 
 import java.util.ArrayList;
 
@@ -17,7 +17,7 @@ public class MainModel {
     private ArrayList<Object> objectList = new ArrayList<>();
     private ArrayList<Influence> influenceList = new ArrayList<>();
     private ArrayList<Connection> connectionList = new ArrayList<>();
-    private ArrayList<Shape> shapeList = new ArrayList<>();
+    private ArrayList<CustomNode> shapeList = new ArrayList<>();
     private ArrayList<Line> lineList = new ArrayList<>();
     private int lineId = 0;
 
@@ -93,11 +93,20 @@ public class MainModel {
         this.connectionList = connectionList;
     }
 
-    public ArrayList<Shape> getShapeList() {
+    public ArrayList<CustomNode> getShapeList() {
         return shapeList;
     }
 
-    public void setShapeList(ArrayList<Shape> shapeList) {
+    public CustomNode getShapeListItemById(int id) {
+        for (CustomNode node : shapeList) {
+            if (node.getNodeId()== id) {
+                return node;
+            }
+        }
+        return null;
+    }
+
+    public void setShapeList(ArrayList<CustomNode> shapeList) {
         this.shapeList = shapeList;
     }
 

@@ -5,6 +5,7 @@ import com.example.mantas_sungaila_bd_fx.model.Influence;
 import com.example.mantas_sungaila_bd_fx.model.MainModel;
 import com.example.mantas_sungaila_bd_fx.model.Object;
 import com.example.mantas_sungaila_bd_fx.view.ApplicationLauncher;
+import com.example.mantas_sungaila_bd_fx.view.CustomNode;
 import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
@@ -16,8 +17,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -29,7 +28,7 @@ import java.util.Set;
 
 public class Main implements Initializable {
 
-    private MainModel model = new MainModel();
+    private final MainModel model = new MainModel();
 
     @FXML private AnchorPane mainPane;
 
@@ -76,10 +75,8 @@ public class Main implements Initializable {
     }
 
     public void newObject() {
-        model.getShapeList().add(new Rectangle(50, 50));
-
-        model.getShapeList().get(shapeId).setStroke(Color.BLACK);
-        model.getShapeList().get(shapeId).setFill(Color.CYAN);
+        CustomNode customNode = new CustomNode(idIntType1, "CYAN");
+        model.getShapeList().add(customNode);
         model.getShapeList().get(shapeId).setId(Integer.toString(idIntType1));
         draggableMaker.makeDraggable(model.getShapeList().get(shapeId));
         mainPane.getChildren().add(model.getShapeList().get(shapeId));
@@ -87,10 +84,8 @@ public class Main implements Initializable {
         this.idIntType1+=2;
     }
     public void newInfluence() {
-        model.getShapeList().add(new Rectangle(50, 50));
-
-        model.getShapeList().get(shapeId).setStroke(Color.BLACK);
-        model.getShapeList().get(shapeId).setFill(Color.SANDYBROWN);
+        CustomNode customNode = new CustomNode(idIntType2, "SANDYBROWN");
+        model.getShapeList().add(customNode);
         model.getShapeList().get(shapeId).setId(Integer.toString(idIntType2));
         draggableMaker.makeDraggable(model.getShapeList().get(shapeId));
         mainPane.getChildren().add(model.getShapeList().get(shapeId));

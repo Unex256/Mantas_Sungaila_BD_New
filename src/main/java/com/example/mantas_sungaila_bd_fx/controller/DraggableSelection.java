@@ -34,8 +34,8 @@ public class DraggableSelection {
         node.setOnMouseDragged(mouseEvent -> {
             if (mouseEvent.getButton() == MouseButton.PRIMARY) {
 
-                node.setLayoutX(mouseEvent.getSceneX() - mouseAnchorX);
-                node.setLayoutY(mouseEvent.getSceneY() - mouseAnchorY);
+                node.setLayoutX(mouseEvent.getSceneX() - mouseAnchorX - 3.0);
+                node.setLayoutY(mouseEvent.getSceneY() - mouseAnchorY - 29.0);
                 lineUpdate(node);
             }
         });

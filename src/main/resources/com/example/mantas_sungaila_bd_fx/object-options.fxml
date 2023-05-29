@@ -2,8 +2,9 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import com.example.mantas_sungaila_bd_fx.view.DrawingCanvas?>
 
-<AnchorPane prefHeight="223.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mantas_sungaila_bd_fx.controller.ObjectOptions">
+<AnchorPane prefHeight="223.0" prefWidth="810.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mantas_sungaila_bd_fx.controller.ObjectOptions">
    <children>
       <CheckBox fx:id="beginningNodeCheckBox" layoutX="300.0" layoutY="21.0" mnemonicParsing="false" onAction="#checkBoxCheck" text="Beggining node" />
       <TextArea fx:id="objDescriptionTextArea" layoutX="98.0" layoutY="116.0" prefHeight="63.0" prefWidth="487.0" />
@@ -23,5 +24,8 @@
       <Label layoutX="180.0" layoutY="21.0" text="Type" />
       <Label layoutX="230.0" layoutY="21.0" text="Object" />
       <Button fx:id="confirmBtn" layoutX="483.0" layoutY="184.0" mnemonicParsing="false" onAction="#onConfirmBtnPress" text="Confirm" />
+      <Pane style="-fx-border-color: black; -fx-border-width: 2;" layoutX="610.0" layoutY="10.0">
+         <DrawingCanvas fx:id="drawingCanvas" width="180" height="180" layoutX="4.0" layoutY="4.0"/>
+      </Pane>
    </children>
 </AnchorPane>

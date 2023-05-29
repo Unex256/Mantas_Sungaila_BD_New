@@ -1,27 +1,17 @@
-package com.example.mantas_sungaila_bd_fx.model;
+package com.example.mantas_sungaila_bd_fx.controller;
 
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.beans.property.ReadOnlyDoubleWrapper;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 
 public class Center {
-    private ReadOnlyDoubleWrapper centerX = new ReadOnlyDoubleWrapper();
-    private ReadOnlyDoubleWrapper centerY = new ReadOnlyDoubleWrapper();
+    private final ReadOnlyDoubleWrapper centerX = new ReadOnlyDoubleWrapper();
+    private final ReadOnlyDoubleWrapper centerY = new ReadOnlyDoubleWrapper();
 
     public Center(Node node) {
         calcCenter(node.getBoundsInParent());
-        node.boundsInParentProperty().addListener(new ChangeListener<Bounds>() {
-            @Override public void changed(
-                    ObservableValue<? extends Bounds> observableValue,
-                    Bounds oldBounds,
-                    Bounds bounds
-            ) {
-                calcCenter(bounds);
-            }
-        });
+        node.boundsInParentProperty().addListener((observableValue, oldBounds, bounds) -> calcCenter(bounds));
     }
 
     private void calcCenter(Bounds bounds) {

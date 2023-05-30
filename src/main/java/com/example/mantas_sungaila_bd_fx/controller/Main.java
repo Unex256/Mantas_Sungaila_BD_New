@@ -81,21 +81,22 @@ public class Main implements Initializable {
 
     public void newObject() {
         CustomNode customNode = new CustomNode(idIntType1, "CYAN");
-        model.getShapeList().put(shapeId, customNode);
-        model.getShapeList().get(shapeId).setId(Integer.toString(idIntType1));
-        draggableMaker.makeDraggable(model.getShapeList().get(shapeId));
-        mainPane.getChildren().add(model.getShapeList().get(shapeId));
-        this.shapeId++;
+        createCustomNode(customNode, idIntType1);
         this.idIntType1+=2;
     }
     public void newInfluence() {
         CustomNode customNode = new CustomNode(idIntType2, "SANDYBROWN");
+        createCustomNode(customNode, idIntType2);
+        this.idIntType2+=2;
+    }
+
+    private void createCustomNode(CustomNode customNode, int idInt) {
+        customNode.animateNode();
         model.getShapeList().put(shapeId, customNode);
-        model.getShapeList().get(shapeId).setId(Integer.toString(idIntType2));
+        model.getShapeList().get(shapeId).setId(Integer.toString(idInt));
         draggableMaker.makeDraggable(model.getShapeList().get(shapeId));
         mainPane.getChildren().add(model.getShapeList().get(shapeId));
         this.shapeId++;
-        this.idIntType2+=2;
     }
 
     @Override
@@ -144,6 +145,7 @@ public class Main implements Initializable {
 
                     private void objectTree(GenericObject object){
                         if (Math.random() < object.getAdjustedRiskChance()) {
+                            Platform.runLater(() -> model.getShapeListItemById(object.getShapeId()).errorAnimation("RED",simulationSpeed));
                             object.increaseRiskCount();
                         }
                         if (Math.random() < object.getAdjustedExitChance()) {

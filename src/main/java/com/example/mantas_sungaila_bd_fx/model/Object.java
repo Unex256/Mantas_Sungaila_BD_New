@@ -13,7 +13,7 @@ public class Object {
 
     public String description = "Obj description";
 
-    public ArrayList<Integer> connections = new ArrayList<Integer>();
+    public ArrayList<Integer> connections = new ArrayList<>();
     public float exitChance = 1;
 
     public float adjustedExitChance = exitChance;
@@ -70,8 +70,8 @@ public class Object {
         return connections;
     }
 
-    public void addConnection(int connection) {
-        this.connections.add(connection);
+    public void addConnection(int connection, int arrowId) {
+        this.connections.add(connection, arrowId);
     }
 
     public float getExitChance() {

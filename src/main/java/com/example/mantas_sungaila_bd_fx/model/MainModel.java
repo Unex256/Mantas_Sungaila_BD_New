@@ -1,25 +1,24 @@
 package com.example.mantas_sungaila_bd_fx.model;
 
+import com.example.mantas_sungaila_bd_fx.view.Arrow;
 import com.example.mantas_sungaila_bd_fx.view.CustomNode;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.scene.control.Label;
-import javafx.scene.shape.Line;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MainModel {
     private final IntegerProperty selectedId = new SimpleIntegerProperty(0);
     private final IntegerProperty secondarySelectedId = new SimpleIntegerProperty(0);
 
     private int arrayItemId;
-    private Label stepCountLabel;
     private ArrayList<Object> objectList = new ArrayList<>();
     private ArrayList<Influence> influenceList = new ArrayList<>();
     private ArrayList<Connection> connectionList = new ArrayList<>();
     private ArrayList<CustomNode> shapeList = new ArrayList<>();
-    private ArrayList<Line> lineList = new ArrayList<>();
-    private int lineId = 0;
+    private HashMap<Integer, Arrow> arrowList = new HashMap<>();
+    private int arrowId = 0;
 
     public int[] returnSelectedListItem(int selectedId){
 
@@ -59,14 +58,6 @@ public class MainModel {
 
     public void setArrayItemId(int arrayItemId) {
         this.arrayItemId = arrayItemId;
-    }
-
-    public Label getStepCountLabel() {
-        return stepCountLabel;
-    }
-
-    public void setStepCountLabel(Label stepCountLabel) {
-        this.stepCountLabel = stepCountLabel;
     }
 
     public ArrayList<Object> getObjectList() {
@@ -110,23 +101,23 @@ public class MainModel {
         this.shapeList = shapeList;
     }
 
-    public ArrayList<Line> getLineList() {
-        return lineList;
+    public HashMap<Integer, Arrow> getArrowList() {
+        return arrowList;
     }
 
-    public void setLineList(ArrayList<Line> lineList) {
-        this.lineList = lineList;
+    public void setArrowList(HashMap<Integer, Arrow> arrowList) {
+        this.arrowList = arrowList;
     }
 
-    public int getLineId() {
-        return lineId;
+    public int getArrowId() {
+        return arrowId;
     }
 
-    public void setLineId(int lineId) {
-        this.lineId = lineId;
+    public void setArrowId(int arrowId) {
+        this.arrowId = arrowId;
     }
 
-    public void increaseStaticLineId() {
-        this.lineId++;
+    public void increaseLineId() {
+        this.arrowId++;
     }
 }

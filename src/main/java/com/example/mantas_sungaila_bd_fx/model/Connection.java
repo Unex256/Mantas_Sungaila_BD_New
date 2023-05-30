@@ -30,12 +30,12 @@ public class Connection implements Initializable {
             case 1 -> {
                 center2 = new Center(model.getShapeList().get(model.getObjectList().get(
                         model.returnSelectedListItem(connectedElementIds[1])[1]).getShapeId()));
-                lineDrawer.drawLine(center1, center2);
+                lineDrawer.drawLine(center1, center2, lineId);
             }
             case 2 -> {
                 center2 = new Center(model.getShapeList().get(model.getInfluenceList().get(
                         model.returnSelectedListItem(connectedElementIds[1])[1]).getShapeId()));
-                lineDrawer.drawLine(center1, center2);
+                lineDrawer.drawLine(center1, center2, lineId);
 
             }
 
@@ -64,12 +64,12 @@ public class Connection implements Initializable {
             case 1 -> {
                 center2 = new Center(model.getShapeList().get(model.getObjectList().get(
                         model.returnSelectedListItem(connectedElementIds[1])[1]).getShapeId()));
-                lineDrawer.drawLine(center1, center2);
+                lineDrawer.drawLine(center1, center2, lineId);
             }
             case 2 -> {
                 center2 = new Center(model.getShapeList().get(model.getInfluenceList().get(
                         model.returnSelectedListItem(connectedElementIds[1])[1]).getShapeId()));
-                lineDrawer.drawLine(center1, center2);
+                lineDrawer.drawLine(center1, center2, lineId);
 
             }
 

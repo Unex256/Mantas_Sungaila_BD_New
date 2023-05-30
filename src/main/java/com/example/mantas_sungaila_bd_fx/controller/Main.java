@@ -137,8 +137,8 @@ public class Main implements Initializable {
             String connectionKey = model.getSelectedId() + ":" + model.getSecondarySelectedId();
 
             if (!connectionSet.contains(connectionKey)) {
-                model.getConnectionList().add(new Connection(model.getSelectedId().get(), model.getSecondarySelectedId().get(), model.getLineId(), model));
-                addConnectionToObject(model.getSelectedId().get(), model.getSecondarySelectedId().get());
+                model.getConnectionList().add(new Connection(model.getSelectedId().get(), model.getSecondarySelectedId().get(), model.getArrowId(), model));
+                addConnectionToObject(model.getSelectedId().get(), model.getSecondarySelectedId().get(), model.getArrowId());
 
                 // Add the connection key to the set
                 connectionSet.add(connectionKey);
@@ -147,17 +147,17 @@ public class Main implements Initializable {
         }
     }
 
-    private void addConnectionToObject(int selectedId, int secondarySelectedId) {
+    private void addConnectionToObject(int selectedId, int secondarySelectedId, int arrowId) {
         if (selectedId % 2 == 1) {
             for (Object object : model.getObjectList()) {
                 if(object.getId() == selectedId){
-                    object.addConnection(secondarySelectedId);
+                    object.addConnection(secondarySelectedId, arrowId);
                 }
             }
         }else {
             for (Influence influence : model.getInfluenceList()) {
                 if(influence.getId() == selectedId){
-                    influence.addConnection(secondarySelectedId);
+                    influence.addConnection(secondarySelectedId, arrowId);
                 }
             }
         }
@@ -242,7 +242,7 @@ public class Main implements Initializable {
     }
 
     private void updateStepCount() {
-        model.getStepCountLabel().setText(Integer.toString(stepCount));
+        stepCountLabel.setText(Integer.toString(stepCount));
     }
 
 }

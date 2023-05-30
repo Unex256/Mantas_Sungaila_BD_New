@@ -74,8 +74,8 @@ public class Influence {
         return shapeId;
     }
 
-    public void addConnection(int secondarySelectedId) {
-        this.connections.add(secondarySelectedId);
+    public void addConnection(int secondarySelectedId, int arrowId) {
+        this.connections.add(secondarySelectedId, arrowId);
     }
 
     public ArrayList<Integer> getConnections() {

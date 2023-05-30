@@ -1,6 +1,6 @@
 package com.example.mantas_sungaila_bd_fx.model;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Influence {
 
@@ -14,7 +14,7 @@ public class Influence {
 
     public float riskValueChange = 0;
 
-    public ArrayList<Integer> connections = new ArrayList<>();
+    public HashMap<Integer, Integer> connections = new HashMap<>();
 
     public float exitValueChange = 0;
     public Influence(int id, int shapeId) {
@@ -75,10 +75,10 @@ public class Influence {
     }
 
     public void addConnection(int secondarySelectedId, int arrowId) {
-        this.connections.add(secondarySelectedId, arrowId);
+        this.connections.put(arrowId, secondarySelectedId);
     }
 
-    public ArrayList<Integer> getConnections() {
+    public HashMap<Integer, Integer> getConnections() {
         return connections;
     }
 }

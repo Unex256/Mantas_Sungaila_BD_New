@@ -5,7 +5,6 @@ import com.example.mantas_sungaila_bd_fx.view.CustomNode;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MainModel {
@@ -13,34 +12,21 @@ public class MainModel {
     private final IntegerProperty secondarySelectedId = new SimpleIntegerProperty(0);
 
     private int arrayItemId;
-    private ArrayList<Object> objectList = new ArrayList<>();
-    private ArrayList<Influence> influenceList = new ArrayList<>();
-    private ArrayList<Connection> connectionList = new ArrayList<>();
-    private ArrayList<CustomNode> shapeList = new ArrayList<>();
+    private HashMap<Integer, GenericObject> objectList = new HashMap<>();
+    private HashMap<Integer, Influence> influenceList = new HashMap<>();
+    private HashMap<Integer, Connection> connectionList = new HashMap<>();
+    private HashMap<Integer, CustomNode> shapeList = new HashMap<>();
     private HashMap<Integer, Arrow> arrowList = new HashMap<>();
     private int arrowId = 0;
 
-    public int[] returnSelectedListItem(int selectedId){
-
+    public java.lang.Object returnSelectedListItem(int selectedId){
         if (selectedId % 2 == 1) {
-            arrayItemId = 0;
-            for (Object object : objectList) {
-                if(object.getId() == selectedId){
-                    return new int[]{1, arrayItemId};
-                }
-               arrayItemId++;
-            }
+            return getObjectListItemById(selectedId);
         }else {
-            arrayItemId = 0;
-            for (Influence influence : influenceList) {
-                if(influence.getId() == selectedId){
-                    return new int[]{2, arrayItemId};
-                }
-                arrayItemId++;
-            }
+            return getInfluenceListItemById(selectedId);
         }
-            return new int[] {0,0};
     }
+
 
 
     public IntegerProperty getSelectedId() {
@@ -60,64 +46,50 @@ public class MainModel {
         this.arrayItemId = arrayItemId;
     }
 
-    public ArrayList<Object> getObjectList() {
+    public HashMap<Integer, GenericObject> getObjectList() {
         return objectList;
     }
 
-    public void setObjectList(ArrayList<Object> objectList) {
-        this.objectList = objectList;
-    }
 
-    public ArrayList<Influence> getInfluenceList() {
+    public GenericObject getObjectListItemById(int id) {
+        return objectList.get(id);
+    }
+    public HashMap<Integer, Influence> getInfluenceList() {
         return influenceList;
     }
 
-    public void setInfluenceList(ArrayList<Influence> influenceList) {
-        this.influenceList = influenceList;
+
+    public Influence getInfluenceListItemById(int id) {
+        return influenceList.get(id);
     }
 
-    public ArrayList<Connection> getConnectionList() {
+    public HashMap<Integer, Connection> getConnectionList() {
         return connectionList;
     }
 
-    public void setConnectionList(ArrayList<Connection> connectionList) {
-        this.connectionList = connectionList;
-    }
-
-    public ArrayList<CustomNode> getShapeList() {
+    public HashMap<Integer, CustomNode> getShapeList() {
         return shapeList;
     }
 
     public CustomNode getShapeListItemById(int id) {
-        for (CustomNode node : shapeList) {
-            if (node.getNodeId()== id) {
-                return node;
-            }
-        }
-        return null;
+        return shapeList.get(id);
     }
 
-    public void setShapeList(ArrayList<CustomNode> shapeList) {
-        this.shapeList = shapeList;
-    }
 
     public HashMap<Integer, Arrow> getArrowList() {
         return arrowList;
     }
 
-    public void setArrowList(HashMap<Integer, Arrow> arrowList) {
-        this.arrowList = arrowList;
+    public Arrow getArrowById(int id) {
+        return arrowList.get(id);
     }
 
     public int getArrowId() {
         return arrowId;
     }
 
-    public void setArrowId(int arrowId) {
-        this.arrowId = arrowId;
-    }
 
-    public void increaseLineId() {
+    public void increaseArrowId() {
         this.arrowId++;
     }
 }

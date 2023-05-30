@@ -44,7 +44,7 @@ public class DraggableSelection {
 
 
     public void lineUpdate(Node node){
-        for(Connection connection : model.getConnectionList()){
+        for(Connection connection : model.getConnectionList().values()){
             if(connection.getConnectedElementIds()[0] == model.getSelectedId().get()){
                 model.getArrowList().get(connection.getLineId()).setStartX(new Center(node).centerXProperty().doubleValue());
                 model.getArrowList().get(connection.getLineId()).setStartY(new Center(node).centerYProperty().doubleValue());

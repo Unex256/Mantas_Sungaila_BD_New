@@ -16,7 +16,7 @@ public class LineDrawer {
             AnchorPane anchorPane = ((AnchorPane) model.getShapeList().get(1).getParent());
             anchorPane.getChildren().add(arrow);
             arrow.toBack();
-            model.increaseLineId();
-            arrow.animateArrow();
+            model.increaseArrowId();
+            arrow.animateArrow(1);
         }
 }

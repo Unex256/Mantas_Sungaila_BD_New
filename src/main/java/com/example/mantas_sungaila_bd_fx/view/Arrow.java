@@ -65,7 +65,13 @@ public class Arrow extends Group {
         arrowHead.setLayoutY(threeQuartersY - arrowHeadHeight / 2 - shiftY);
     }
 
-    public void animateArrow() {
+    public void animateArrow(int simulationSpeed) {
+        int duration = 800 / simulationSpeed;
+
+        if (duration < 40){
+            return;
+        }
+
         Color originalLineColor = (Color) line.getStroke();
         Color originalArrowHeadColor = (Color) arrowHead.getFill();
         double originalStrokeWidth = line.getStrokeWidth();
@@ -84,7 +90,7 @@ public class Arrow extends Group {
         timeline.getKeyFrames().add(startFrame);
 
         // Create a KeyFrame to change the color, width, and scale back over the next 500ms
-        KeyFrame endFrame = new KeyFrame(Duration.millis(500),
+        KeyFrame endFrame = new KeyFrame(Duration.millis(duration),
                 new KeyValue(line.strokeProperty(), originalLineColor),
                 new KeyValue(line.strokeWidthProperty(), originalStrokeWidth),
                 new KeyValue(arrowHead.fillProperty(), originalArrowHeadColor),

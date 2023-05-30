@@ -1,5 +1,6 @@
 package com.example.mantas_sungaila_bd_fx.controller;
 
+import com.example.mantas_sungaila_bd_fx.model.Influence;
 import com.example.mantas_sungaila_bd_fx.model.MainModel;
 import com.example.mantas_sungaila_bd_fx.view.DrawingCanvas;
 import javafx.fxml.FXML;
@@ -17,6 +18,7 @@ import java.util.ResourceBundle;
 
 public class InfluenceOptions implements Initializable {
 
+    private final int selectedId;
     MainModel model;
     public TextArea objDescriptionTextArea;
     public TextField exitValueChange;
@@ -28,8 +30,9 @@ public class InfluenceOptions implements Initializable {
     @FXML
     private DrawingCanvas drawingCanvas;
 
-    public InfluenceOptions(MainModel model) {
+    public InfluenceOptions(MainModel model, int selectedId) {
         this.model = model;
+        this.selectedId = selectedId;
     }
 
     @Override
@@ -37,23 +40,21 @@ public class InfluenceOptions implements Initializable {
         drawingCanvas.setBackgroundColor(Color.SANDYBROWN);
 
         this.idLabel.setText(Integer.toString(model.getSelectedId().get()));
-        this.objDescriptionTextArea.setText(model.getInfluenceList().get(model.getArrayItemId()).getDescription());
-        this.exitValueChange.setText(Float.toString(model.getInfluenceList().get(model.getArrayItemId()).getExitValueChange()));
-        this.riskValueChange.setText(Float.toString(model.getInfluenceList().get(model.getArrayItemId()).getRiskValueChange()));
-        this.objNameTextArea.setText(model.getInfluenceList().get(model.getArrayItemId()).getObjName());
+        this.objDescriptionTextArea.setText(model.getInfluenceListItemById(selectedId).getDescription());
+        this.exitValueChange.setText(Float.toString(model.getInfluenceListItemById(selectedId).getExitValueChange()));
+        this.riskValueChange.setText(Float.toString(model.getInfluenceListItemById(selectedId).getRiskValueChange()));
+        this.objNameTextArea.setText(model.getInfluenceListItemById(selectedId).getObjName());
     }
 
     public void onConfirmBtnPress() {
-        model.getInfluenceList().get(model.getArrayItemId()).setDescription(objDescriptionTextArea.getText());
-        model.getInfluenceList().get(model.getArrayItemId()).setExitValueChange(Float.parseFloat(exitValueChange.getText()));
-        model.getInfluenceList().get(model.getArrayItemId()).setObjName(objNameTextArea.getText());
-        model.getInfluenceList().get(model.getArrayItemId()).setRiskValueChange(Float.parseFloat(riskValueChange.getText()));
+        Influence selectedInfluence = model.getInfluenceListItemById(selectedId);
+        selectedInfluence.setDescription(objDescriptionTextArea.getText());
+        selectedInfluence.setExitValueChange(Float.parseFloat(exitValueChange.getText()));
+        selectedInfluence.setObjName(objNameTextArea.getText());
+        selectedInfluence.setRiskValueChange(Float.parseFloat(riskValueChange.getText()));
 
         Image image = drawingCanvas.snapshot(new SnapshotParameters(), null);
-        model.getShapeListItemById(model.getSelectedId().get()).setImage(image);
+        model.getShapeListItemById(selectedInfluence.getShapeId()).setImage(image);
     }
 
-    public void setModel(MainModel model){
-        this.model = model;
-    }
 }

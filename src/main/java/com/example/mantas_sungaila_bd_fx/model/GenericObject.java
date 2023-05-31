@@ -1,8 +1,8 @@
 package com.example.mantas_sungaila_bd_fx.model;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
-public class Object {
+public class GenericObject {
     public int id;
     private int shapeId;
     public int type = 1;
@@ -13,7 +13,7 @@ public class Object {
 
     public String description = "Obj description";
 
-    public ArrayList<Integer> connections = new ArrayList<Integer>();
+    public HashMap<Integer, Integer> connections = new HashMap<>();
     public float exitChance = 1;
 
     public float adjustedExitChance = exitChance;
@@ -29,7 +29,7 @@ public class Object {
     public int pulseCount = 0;
 
 
-    public Object(int id, int shapeId) {
+    public GenericObject(int id, int shapeId) {
         this.id = id;
         this.shapeId = shapeId;
     }
@@ -66,12 +66,12 @@ public class Object {
         this.id = id;
     }
 
-    public ArrayList<Integer> getConnections() {
+    public HashMap<Integer, Integer> getConnections() {
         return connections;
     }
 
-    public void addConnection(int connection) {
-        this.connections.add(connection);
+    public void addConnection(int connection, int arrowId) {
+        this.connections.put(arrowId, connection);
     }
 
     public float getExitChance() {

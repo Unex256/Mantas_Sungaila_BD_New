@@ -20,25 +20,22 @@ public class Connection implements Initializable {
         this.lineDrawer = new LineDrawer(model);
         this.connectedElementIds = new int[]{a , b};
         this.lineId = lineId;
-        switch (model.returnSelectedListItem(connectedElementIds[0])[0]) {
-            case 1 -> center1 = new Center(model.getShapeList().get(model.getObjectList().get(
-                    model.returnSelectedListItem(connectedElementIds[0])[1]).getShapeId()));
-            case 2 -> center1 = new Center(model.getShapeList().get(model.getInfluenceList().get(
-                    model.returnSelectedListItem(connectedElementIds[0])[1]).getShapeId()));
+
+        Object oj = model.returnSelectedListItem(connectedElementIds[0]);
+        if (oj instanceof GenericObject) {
+            center1 = new Center(model.getShapeList().get(((GenericObject)oj).getShapeId()));
+        } else if (oj instanceof Influence) {
+            center1 = new Center(model.getShapeList().get(((Influence)oj).getShapeId()));
         }
-        switch (model.returnSelectedListItem(connectedElementIds[1])[0]) {
-            case 1 -> {
-                center2 = new Center(model.getShapeList().get(model.getObjectList().get(
-                        model.returnSelectedListItem(connectedElementIds[1])[1]).getShapeId()));
-                lineDrawer.drawLine(center1, center2);
-            }
-            case 2 -> {
-                center2 = new Center(model.getShapeList().get(model.getInfluenceList().get(
-                        model.returnSelectedListItem(connectedElementIds[1])[1]).getShapeId()));
-                lineDrawer.drawLine(center1, center2);
 
-            }
+        oj = model.returnSelectedListItem(connectedElementIds[1]);
 
+        if (oj instanceof GenericObject) {
+            center2 = new Center(model.getShapeList().get(((GenericObject)oj).getShapeId()));
+            lineDrawer.drawLine(center1, center2, lineId);
+        } else if (oj instanceof Influence) {
+            center2 = new Center(model.getShapeList().get(((Influence)oj).getShapeId()));
+            lineDrawer.drawLine(center1, center2, lineId);
         }
     }
 
@@ -54,25 +51,23 @@ public class Connection implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        switch (model.returnSelectedListItem(connectedElementIds[0])[0]) {
-            case 1 -> center1 = new Center(model.getShapeList().get(model.getObjectList().get(
-                    model.returnSelectedListItem(connectedElementIds[0])[1]).getShapeId()));
-            case 2 -> center1 = new Center(model.getShapeList().get(model.getInfluenceList().get(
-                    model.returnSelectedListItem(connectedElementIds[0])[1]).getShapeId()));
+        Object oj = model.returnSelectedListItem(connectedElementIds[0]);
+        if (oj instanceof GenericObject) {
+            center1 = new Center(model.getShapeList().get(((GenericObject)oj).getShapeId()));
+        } else if (oj instanceof Influence) {
+            center1 = new Center(model.getShapeList().get(((Influence)oj).getShapeId()));
         }
-        switch (model.returnSelectedListItem(connectedElementIds[1])[0]) {
-            case 1 -> {
-                center2 = new Center(model.getShapeList().get(model.getObjectList().get(
-                        model.returnSelectedListItem(connectedElementIds[1])[1]).getShapeId()));
-                lineDrawer.drawLine(center1, center2);
-            }
-            case 2 -> {
-                center2 = new Center(model.getShapeList().get(model.getInfluenceList().get(
-                        model.returnSelectedListItem(connectedElementIds[1])[1]).getShapeId()));
-                lineDrawer.drawLine(center1, center2);
 
-            }
+        oj = model.returnSelectedListItem(connectedElementIds[1]);
 
+        if (oj instanceof GenericObject) {
+            center2 = new Center(model.getShapeList().get(((GenericObject)oj).getShapeId()));
+            lineDrawer.drawLine(center1, center2, lineId);
+        } else if (oj instanceof Influence) {
+            center2 = new Center(model.getShapeList().get(((Influence)oj).getShapeId()));
+            lineDrawer.drawLine(center1, center2, lineId);
         }
+
     }
 }
+

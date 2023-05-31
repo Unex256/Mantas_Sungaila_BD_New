@@ -42,16 +42,16 @@ public class DraggableSelection {
 
     }
 
-    public void lineUpdate(Node node){
-        for(Connection connection : model.getConnectionList()){
-            if(connection.getConnectedElementIds()[0] == model.getSelectedId().get()){
-                model.getLineList().get(connection.getLineId()).setStartX(new Center(node).centerXProperty().doubleValue());
-                model.getLineList().get(connection.getLineId()).setStartY(new Center(node).centerYProperty().doubleValue());
-            } else if (connection.getConnectedElementIds()[1] == model.getSelectedId().get()){
-                model.getLineList().get(connection.getLineId()).setEndX(new Center(node).centerXProperty().doubleValue());
-                model.getLineList().get(connection.getLineId()).setEndY(new Center(node).centerYProperty().doubleValue());
-            }
 
+    public void lineUpdate(Node node){
+        for(Connection connection : model.getConnectionList().values()){
+            if(connection.getConnectedElementIds()[0] == model.getSelectedId().get()){
+                model.getArrowList().get(connection.getLineId()).setStartX(new Center(node).centerXProperty().doubleValue());
+                model.getArrowList().get(connection.getLineId()).setStartY(new Center(node).centerYProperty().doubleValue());
+            } else if (connection.getConnectedElementIds()[1] == model.getSelectedId().get()){
+                model.getArrowList().get(connection.getLineId()).setEndX(new Center(node).centerXProperty().doubleValue());
+                model.getArrowList().get(connection.getLineId()).setEndY(new Center(node).centerYProperty().doubleValue());
+            }
         }
     }
 
